@@ -110,22 +110,4 @@ export class ProductManager {
     const filteredProducts = this.products.filter(i => i.id != id)
     await this.writeProducts(filteredProducts)
   }
-
 }
-
-////////////////////Testing///////////////////////
-
-// const newProductManager = new ProductManager("./src/productManager.json");
-
-// (async () => {
-//   await newProductManager.getProducts()
-//   await newProductManager.addProduct("Producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc123", 25)
-//   await newProductManager.getProducts()
-//   await newProductManager.getProductById(1)
-//   await newProductManager.updateProduct(1, {
-//     title: "Nuevo nombre",
-//     price: 300,
-//     stock: 50
-//   })
-//   // await newProductManager.deleteProduct(1)
-// })()
