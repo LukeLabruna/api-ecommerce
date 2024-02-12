@@ -1,0 +1,182 @@
+[
+  {
+    "id": "1",
+    "code": "CPU123",
+    "title": "Procesador Intel Core i5",
+    "description": "Potente procesador para rendimiento óptimo",
+    "price": 300,
+    "thumbnail": "cpu_i5.jpg",
+    "stock": 50
+  },
+  {
+    "id": "2",
+    "code": "GPU456",
+    "title": "Tarjeta Gráfica NVIDIA GeForce RTX 3060",
+    "description": "Gráficos de alta calidad para juegos y diseño",
+    "price": 500,
+    "thumbnail": "gpu_rtx3060.jpg",
+    "stock": 30
+  },
+  {
+    "id": "3",
+    "code": "RAM789",
+    "title": "Memoria RAM Corsair Vengeance 16GB",
+    "description": "Memoria rápida para multitarea sin problemas",
+    "price": 120,
+    "thumbnail": "ram_corsair_16gb.jpg",
+    "stock": 40
+  },
+  {
+    "id": "4",
+    "code": "HDD101",
+    "title": "Disco Duro Seagate Barracuda 1TB",
+    "description": "Almacenamiento confiable para tus datos",
+    "price": 50,
+    "thumbnail": "hdd_seagate_1tb.jpg",
+    "stock": 60
+  },
+  {
+    "id": "5",
+    "code": "SSD202",
+    "title": "SSD Samsung 500GB",
+    "description": "Arranque rápido y transferencia de datos veloz",
+    "price": 80,
+    "thumbnail": "ssd_samsung_500gb.jpg",
+    "stock": 25
+  },
+  {
+    "id": "6",
+    "code": "MBD303",
+    "title": "Placa Base ASUS Prime B450M",
+    "description": "Base sólida para construir tu sistema",
+    "price": 90,
+    "thumbnail": "mbd_asus_prime_b450m.jpg",
+    "stock": 15
+  },
+  {
+    "id": "7",
+    "code": "PSU404",
+    "title": "Fuente de Poder EVGA 600W",
+    "description": "Suministro confiable de energía para tu PC",
+    "price": 70,
+    "thumbnail": "psu_evga_600w.jpg",
+    "stock": 35
+  },
+  {
+    "id": "8",
+    "code": "MON505",
+    "title": "Monitor Dell 24 pulgadas",
+    "description": "Pantalla nítida y colores vibrantes",
+    "price": 150,
+    "thumbnail": "monitor_dell_24inch.jpg",
+    "stock": 20
+  },
+  {
+    "id": "9",
+    "code": "KYB606",
+    "title": "Teclado Mecánico Logitech G Pro",
+    "description": "Teclas sensibles para una experiencia de escritura superior",
+    "price": 100,
+    "thumbnail": "keyboard_logitech_gpro.jpg",
+    "stock": 18
+  },
+  {
+    "id": "10",
+    "code": "MS711",
+    "title": "Mouse Inalámbrico Microsoft Ergonómico",
+    "description": "Diseño cómodo para largas sesiones de trabajo",
+    "price": 60,
+    "thumbnail": "mouse_microsoft_ergonomic.jpg",
+    "stock": 25
+  },
+  {
+    "id": "11",
+    "code": "HDR812",
+    "title": "Auriculares Razer Kraken Pro",
+    "description": "Audio envolvente para una experiencia inmersiva",
+    "price": 80,
+    "thumbnail": "headset_razer_kraken_pro.jpg",
+    "stock": 22
+  },
+  {
+    "id": "12",
+    "code": "NET913",
+    "title": "Adaptador WiFi TP-Link Archer T4U",
+    "description": "Conexión rápida y estable a la red",
+    "price": 30,
+    "thumbnail": "wifi_adapter_tplink_archer_t4u.jpg",
+    "stock": 28
+  },
+  {
+    "id": "13",
+    "code": "CAM1014",
+    "title": "Cámara Web Logitech C920",
+    "description": "Calidad de video HD para conferencias y transmisiones",
+    "price": 50,
+    "thumbnail": "webcam_logitech_c920.jpg",
+    "stock": 20
+  },
+  {
+    "id": "14",
+    "code": "UPS1515",
+    "title": "UPS APC Back-UPS 850VA",
+    "description": "Protege tu equipo contra cortes de energía",
+    "price": 120,
+    "thumbnail": "ups_apc_850va.jpg",
+    "stock": 15
+  },
+  {
+    "id": "15",
+    "code": "FAN1616",
+    "title": "Ventilador Corsair LL120 RGB",
+    "description": "Mantén tu sistema fresco con estilo",
+    "price": 40,
+    "thumbnail": "fan_corsair_ll120_rgb.jpg",
+    "stock": 30
+  },
+  {
+    "id": "16",
+    "code": "CASE1717",
+    "title": "Gabinete NZXT H510",
+    "description": "Diseño elegante y espacio para una construcción ordenada",
+    "price": 90,
+    "thumbnail": "case_nzxt_h510.jpg",
+    "stock": 10
+  },
+  {
+    "id": "17",
+    "code": "PRN1818",
+    "title": "Impresora Brother HL-L2370DW",
+    "description": "Impresiones rápidas y de alta calidad",
+    "price": 150,
+    "thumbnail": "printer_brother_hll2370dw.jpg",
+    "stock": 25
+  },
+  {
+    "id": "18",
+    "code": "SCAN1919",
+    "title": "Escáner Epson Perfection V600",
+    "description": "Digitaliza documentos y fotos con gran detalle",
+    "price": 200,
+    "thumbnail": "scanner_epson_v600.jpg",
+    "stock": 12
+  },
+  {
+    "id": "19",
+    "code": "ROUT2020",
+    "title": "Router ASUS RT-AC1750",
+    "description": "Conexiones rápidas y seguras para tu red",
+    "price": 80,
+    "thumbnail": "router_asus_rtac1750.jpg",
+    "stock": 18
+  },
+  {
+    "id": "20",
+    "code": "SPEAK2121",
+    "title": "Altavoces Logitech Z623",
+    "description": "Sonido potente para una experiencia de audio envolvente",
+    "price": 120,
+    "thumbnail": "speakers_logitech_z623.jpg",
+    "stock": 15
+  }
+]
