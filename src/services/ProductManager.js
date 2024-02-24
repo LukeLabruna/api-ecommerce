@@ -1,48 +1,47 @@
-import { promises as fsPromises } from "fs"
+const fsPromises = require('fs').promises
 
-export class ProductManager {
+class ProductManager {
 
   constructor(path) {
     this.path = path
-    this.products = []
+    this.products = null
   }
 
-  async addProduct(title, description, price, thumbnail, code, stock) {
+  async addProduct(product) {
     try {
-      if (!this.products) {
+      if (this.products === null) {
         await this.readProducts()
       }
 
-      const productExists = this.products.some(i => i.code === code)
+      const productExists = this.products.some(i => i.code === product.code)
 
       if (productExists) {
-        console.error("Product already exist")
-        return
+        throw new Error("Product already exists")
       }
 
-      if (!title || !description || !price || !thumbnail || !code || !stock) {
-        console.error("Product missing fields")
-        return
+      if (!product.title || !product.description || !product.price || !product.code || !product.stock || !product.category) {
+        throw new Error("Product missing fields")
       }
 
       let maxId = this.products.length > 0 ? Math.max(...this.products.map(i => i.id)) : 0
       const id = maxId + 1
 
       const newProduct = {
-        title,
-        description,
-        price,
-        thumbnail,
-        code,
-        stock,
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        thumbnail: product.thumbnail,
+        code: product.code,
+        stock: product.stock,
+        category: product.category,
+        status: product.status === false ? false : true,
         id
       }
 
       this.products.push(newProduct)
       await this.writeProducts(this.products)
-
     } catch (error) {
-      console.error("Product could not be added", error)
+      throw error
     }
   }
 
@@ -65,8 +64,8 @@ export class ProductManager {
   }
 
   async getProducts() {
-      await this.readProducts()
-      return this.products
+    await this.readProducts()
+    return this.products
   }
 
   async getProductById(id) {
@@ -74,22 +73,21 @@ export class ProductManager {
       await this.readProducts()
       const product = this.products.find(i => i.id === id)
       if (!product) {
-        throw new Error("Product not found")
+        throw new Error(`Product with Id: ${id} not found`)
       }
       return product
     } catch (error) {
-      
+      throw error
     }
   }
 
   async updateProduct(id, updatedProduct) {
     try {
       await this.readProducts()
-      const productIndex = this.products.findIndex(i => i.id === id)
+      const productIndex = this.products.findIndex(i => i.id == id)
 
       if (productIndex === -1) {
-        console.error("Product not found for update")
-        return
+        throw new Error(`Product with Id: ${id} not found`)
       }
 
       this.products[productIndex] = {
@@ -101,13 +99,23 @@ export class ProductManager {
       await this.writeProducts(this.products);
 
     } catch (error) {
-      console.error("Error updating product", error)
+      throw error
     }
   }
 
   async deleteProduct(id) {
-    await this.readProducts()
-    const filteredProducts = this.products.filter(i => i.id != id)
-    await this.writeProducts(filteredProducts)
+    try {
+      await this.readProducts()
+      const productToDelete = this.products.find(product => product.id == id);
+      if (!productToDelete) {
+        throw new Error(`Product with id ${id} not found`);
+      }
+      const filteredProducts = this.products.filter(i => i.id != id)
+      await this.writeProducts(filteredProducts)
+    } catch (error) {
+      throw error
+    }
   }
 }
+
+module.exports = ProductManager

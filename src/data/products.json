@@ -5,17 +5,10 @@
     "title": "Procesador Intel Core i5",
     "description": "Potente procesador para rendimiento óptimo",
     "price": 300,
-    "thumbnail": "cpu_i5.jpg",
-    "stock": 50
-  },
-  {
-    "id": "2",
-    "code": "GPU456",
-    "title": "Tarjeta Gráfica NVIDIA GeForce RTX 3060",
-    "description": "Gráficos de alta calidad para juegos y diseño",
-    "price": 500,
-    "thumbnail": "gpu_rtx3060.jpg",
-    "stock": 30
+    "thumbnail": [],
+    "stock": 50,
+    "status": true,
+    "category": "Hardware"
   },
   {
     "id": "3",
@@ -23,8 +16,10 @@
     "title": "Memoria RAM Corsair Vengeance 16GB",
     "description": "Memoria rápida para multitarea sin problemas",
     "price": 120,
-    "thumbnail": "ram_corsair_16gb.jpg",
-    "stock": 40
+    "thumbnail": [],
+    "stock": 40,
+    "status": true,
+    "category": "Hardware"
   },
   {
     "id": "4",
@@ -32,8 +27,10 @@
     "title": "Disco Duro Seagate Barracuda 1TB",
     "description": "Almacenamiento confiable para tus datos",
     "price": 50,
-    "thumbnail": "hdd_seagate_1tb.jpg",
-    "stock": 60
+    "thumbnail": [],
+    "stock": 60,
+    "status": true,
+    "category": "Hardware"
   },
   {
     "id": "5",
@@ -41,8 +38,10 @@
     "title": "SSD Samsung 500GB",
     "description": "Arranque rápido y transferencia de datos veloz",
     "price": 80,
-    "thumbnail": "ssd_samsung_500gb.jpg",
-    "stock": 25
+    "thumbnail": [],
+    "stock": 25,
+    "status": true,
+    "category": "Hardware"
   },
   {
     "id": "6",
@@ -50,8 +49,10 @@
     "title": "Placa Base ASUS Prime B450M",
     "description": "Base sólida para construir tu sistema",
     "price": 90,
-    "thumbnail": "mbd_asus_prime_b450m.jpg",
-    "stock": 15
+    "thumbnail": [],
+    "stock": 15,
+    "status": true,
+    "category": "Hardware"
   },
   {
     "id": "7",
@@ -59,8 +60,10 @@
     "title": "Fuente de Poder EVGA 600W",
     "description": "Suministro confiable de energía para tu PC",
     "price": 70,
-    "thumbnail": "psu_evga_600w.jpg",
-    "stock": 35
+    "thumbnail": [],
+    "stock": 35,
+    "status": true,
+    "category": "Hardware"
   },
   {
     "id": "8",
@@ -68,8 +71,10 @@
     "title": "Monitor Dell 24 pulgadas",
     "description": "Pantalla nítida y colores vibrantes",
     "price": 150,
-    "thumbnail": "monitor_dell_24inch.jpg",
-    "stock": 20
+    "thumbnail": [],
+    "stock": 20,
+    "status": true,
+    "category": "Periféricos"
   },
   {
     "id": "9",
@@ -77,8 +82,10 @@
     "title": "Teclado Mecánico Logitech G Pro",
     "description": "Teclas sensibles para una experiencia de escritura superior",
     "price": 100,
-    "thumbnail": "keyboard_logitech_gpro.jpg",
-    "stock": 18
+    "thumbnail": [],
+    "stock": 18,
+    "status": true,
+    "category": "Periféricos"
   },
   {
     "id": "10",
@@ -86,8 +93,10 @@
     "title": "Mouse Inalámbrico Microsoft Ergonómico",
     "description": "Diseño cómodo para largas sesiones de trabajo",
     "price": 60,
-    "thumbnail": "mouse_microsoft_ergonomic.jpg",
-    "stock": 25
+    "thumbnail": [],
+    "stock": 25,
+    "status": true,
+    "category": "Periféricos"
   },
   {
     "id": "11",
@@ -95,8 +104,10 @@
     "title": "Auriculares Razer Kraken Pro",
     "description": "Audio envolvente para una experiencia inmersiva",
     "price": 80,
-    "thumbnail": "headset_razer_kraken_pro.jpg",
-    "stock": 22
+    "thumbnail": [],
+    "stock": 22,
+    "status": true,
+    "category": "Periféricos"
   },
   {
     "id": "12",
@@ -104,8 +115,10 @@
     "title": "Adaptador WiFi TP-Link Archer T4U",
     "description": "Conexión rápida y estable a la red",
     "price": 30,
-    "thumbnail": "wifi_adapter_tplink_archer_t4u.jpg",
-    "stock": 28
+    "thumbnail": [],
+    "stock": 28,
+    "status": true,
+    "category": "Redes"
   },
   {
     "id": "13",
@@ -113,8 +126,10 @@
     "title": "Cámara Web Logitech C920",
     "description": "Calidad de video HD para conferencias y transmisiones",
     "price": 50,
-    "thumbnail": "webcam_logitech_c920.jpg",
-    "stock": 20
+    "thumbnail": [],
+    "stock": 20,
+    "status": true,
+    "category": "Periféricos"
   },
   {
     "id": "14",
@@ -122,8 +137,10 @@
     "title": "UPS APC Back-UPS 850VA",
     "description": "Protege tu equipo contra cortes de energía",
     "price": 120,
-    "thumbnail": "ups_apc_850va.jpg",
-    "stock": 15
+    "thumbnail": [],
+    "stock": 15,
+    "status": true,
+    "category": "Accesorios"
   },
   {
     "id": "15",
@@ -131,8 +148,10 @@
     "title": "Ventilador Corsair LL120 RGB",
     "description": "Mantén tu sistema fresco con estilo",
     "price": 40,
-    "thumbnail": "fan_corsair_ll120_rgb.jpg",
-    "stock": 30
+    "thumbnail": [],
+    "stock": 30,
+    "status": true,
+    "category": "Accesorios"
   },
   {
     "id": "16",
@@ -140,8 +159,10 @@
     "title": "Gabinete NZXT H510",
     "description": "Diseño elegante y espacio para una construcción ordenada",
     "price": 90,
-    "thumbnail": "case_nzxt_h510.jpg",
-    "stock": 10
+    "thumbnail": [],
+    "stock": 10,
+    "status": true,
+    "category": "Accesorios"
   },
   {
     "id": "17",
@@ -149,8 +170,10 @@
     "title": "Impresora Brother HL-L2370DW",
     "description": "Impresiones rápidas y de alta calidad",
     "price": 150,
-    "thumbnail": "printer_brother_hll2370dw.jpg",
-    "stock": 25
+    "thumbnail": [],
+    "stock": 25,
+    "status": true,
+    "category": "Periféricos"
   },
   {
     "id": "18",
@@ -158,8 +181,10 @@
     "title": "Escáner Epson Perfection V600",
     "description": "Digitaliza documentos y fotos con gran detalle",
     "price": 200,
-    "thumbnail": "scanner_epson_v600.jpg",
-    "stock": 12
+    "thumbnail": [],
+    "stock": 12,
+    "status": true,
+    "category": "Periféricos"
   },
   {
     "id": "19",
@@ -167,8 +192,10 @@
     "title": "Router ASUS RT-AC1750",
     "description": "Conexiones rápidas y seguras para tu red",
     "price": 80,
-    "thumbnail": "router_asus_rtac1750.jpg",
-    "stock": 18
+    "thumbnail": [],
+    "stock": 18,
+    "status": true,
+    "category": "Redes"
   },
   {
     "id": "20",
@@ -176,7 +203,9 @@
     "title": "Altavoces Logitech Z623",
     "description": "Sonido potente para una experiencia de audio envolvente",
     "price": 120,
-    "thumbnail": "speakers_logitech_z623.jpg",
-    "stock": 15
+    "thumbnail": [],
+    "stock": 15,
+    "status": true,
+    "category": "Audio"
   }
 ]
