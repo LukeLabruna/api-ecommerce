@@ -31,6 +31,7 @@ io.on("connection", (socket) => {
   socket.on("newProduct", async (data) => {
     try {
       await newProductManager.addProduct(data)
+      socket.emit("success", {message: "Correctly aggregated product"})
       const products = await newProductManager.getProducts()
       socket.emit("products", products)
     } catch (error) {
@@ -41,6 +42,7 @@ io.on("connection", (socket) => {
   socket.on("deleteProduct", async (data) => {
     try {
       await newProductManager.deleteProduct(data)
+      socket.emit("success", {message: `Product with id: ${data} correctly deleted`})
       const products = await newProductManager.getProducts()
       socket.emit("products", products)
     } catch (error) {

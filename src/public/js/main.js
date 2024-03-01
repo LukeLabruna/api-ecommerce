@@ -70,3 +70,11 @@ socket.on("error", (data) => {
     text: `${data}`
   });
 })
+
+socket.on("success", (data) => {
+  Swal.fire({
+    title: "Good job!",
+    text: `${data.message}`,
+    icon: "success"
+  })
+})

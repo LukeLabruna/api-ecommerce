@@ -40,6 +40,9 @@ class ProductManager {
 
       this.products.push(newProduct)
       await this.writeProducts(this.products)
+
+      return ""
+
     } catch (error) {
       throw error
     }
