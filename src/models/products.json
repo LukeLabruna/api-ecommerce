@@ -11,6 +11,17 @@
     "category": "Hardware"
   },
   {
+    "id": "2",
+    "code": "GPU456",
+    "title": "Tarjeta Gráfica NVIDIA GeForce RTX 3060",
+    "description": "Gráficos de alta calidad para juegos y diseño",
+    "price": 500,
+    "thumbnail": [],
+    "stock": 30,
+    "status": true,
+    "category": "Hardware"
+  },
+  {
     "id": "3",
     "code": "RAM789",
     "title": "Memoria RAM Corsair Vengeance 16GB",

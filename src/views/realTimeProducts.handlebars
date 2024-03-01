@@ -1,0 +1,18 @@
+{{> navBar}}
+
+<h1>Real times Products</h1>
+
+<div class="forms">
+  {{> formNewProduct}}
+  {{> formDeleteProduct}}
+</div>
+
+<div id="realTimeProducts" class="products">
+  {{#each products}}
+  {{> card}}
+  {{/each}}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.socket.io/4.7.3/socket.io.min.js"></script>
+<script src="js/main.js"></script>

@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
-const CartManager = require("../services/CartManager.js")
-const newCartManager = new CartManager("./src/data/carts.json")
+const CartManager = require("../controllers/CartManager.js")
+const newCartManager = new CartManager("./src/models/carts.json")
 const { newProductManager } = require("./products.router.js")
 
 router.post("/", async (req, res) => {
@@ -71,4 +71,4 @@ router.delete("/:cid", async (req, res) => {
   }
 })
 
-module.exports = router
+module.exports = { router, newCartManager }
