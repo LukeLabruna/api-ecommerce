@@ -1,54 +1,20 @@
-const fsPromises = require('fs').promises
+const CartModel = require("../models/cart.model.js")
 
 class CartManager {
 
-  constructor(path) {
-    this.path = path
-    this.carts = null
-  }
-
   async addCart() {
     try {
-      if (this.carts === null) {
-        await this.readCarts()
-      }
-
-      let maxId = this.carts.length > 0 ? Math.max(...this.carts.map(i => i.id)) : 0
-      const id = maxId + 1
-
-      const newCart = {
-        id,
-        products: []
-      }
-      this.carts.push(newCart)
-      await this.writeCarts(this.carts)
+      const newCart = new CartModel({ products: [] })
+      await newCart.save()
     } catch (error) {
       throw error
     }
   }
 
-  async readCarts() {
-    try {
-      const response = await fsPromises.readFile(this.path, "utf-8")
-      const carts = JSON.parse(response)
-      this.carts = carts
-    } catch (error) {
-      this.carts = []
-    }
-  }
-
-  async writeCarts(newCarts) {
-    try {
-      await fsPromises.writeFile(this.path, JSON.stringify(newCarts, null, 2))
-    } catch (error) {
-      console.error("Carts could not be written", error)
-    }
-  }
 
   async getProductsByCartId(cid) {
     try {
-      await this.readCarts()
-      const cart = this.carts.find(i => i.id == cid)
+      const cart = await CartModel.findById(cid)
       if (!cart) {
         throw new Error(`Cart with Id: ${cid} not found`)
       }
@@ -60,28 +26,22 @@ class CartManager {
 
   async addProduct(cid, pid, quantity = 1) {
     try {
-      if (this.carts === null) {
-        await this.readCarts()
-      }
-
-      const cart = this.carts.find(i => i.id == cid)
-
+      const cart = await CartModel.findById(cid)
       if (!cart) {
         throw new Error(`Cart with Id: ${cid} not found`);
       }
-
-      const existingProductIndex = cart.products.findIndex(i => i.productId == pid);
-
-      if (existingProductIndex !== -1) {
-        cart.products[existingProductIndex].quantity += quantity;
+      const productExists = cart.products.find(p => p.product.toString() === pid)
+      if (productExists) {
+        productExists.quantity += quantity;
       } else {
         const newProduct = {
-          productId: parseInt(pid),
+          product: pid,
           quantity
         }
         cart.products.push(newProduct)
       }
-      await this.writeCarts(this.carts)
+      cart.markModified("products")
+      await cart.save()
     } catch (error) {
       throw error
     }
@@ -89,25 +49,18 @@ class CartManager {
 
   async deleteProductById(cid, pid) {
     try {
-      await this.readCarts()
-      const cartIndex = this.carts.findIndex(i => i.id == cid)
-  
-      if (cartIndex === -1) {
+      const cart = await CartModel.findById(cid)
+      if (!cart) {
         throw new Error(`Cart with Id: ${cid} not found`)
       }
-  
-      const cart = this.carts[cartIndex]
-      const productIndex = cart.products.findIndex(i => i.productId == pid)
-  
+      const productIndex = cart.products.findIndex(p => p.product.toString() === pid)
       if (productIndex === -1) {
         throw new Error(`Product with id ${pid} not found`)
+      } else {
+        cart.products.splice(productIndex, 1)
       }
-  
-      cart.products.splice(productIndex, 1)
-  
-      this.carts[cartIndex] = cart
-  
-      await this.writeCarts(this.carts)
+      cart.markModified("products")
+      await cart.save()
     } catch (error) {
       throw error
     }
@@ -115,9 +68,7 @@ class CartManager {
 
   async deleteAllProducts(cid) {
     try {
-      await this.readCarts()
-      const cart = this.carts.find(i => i.id == cid)
-
+      const cart = await CartModel.findById(cid)
       if (!cart) {
         throw new Error(`Cart with Id: ${cid} not found`)
       }
@@ -125,7 +76,8 @@ class CartManager {
         throw new Error(`Cart with Id: ${cid} is alredy empty`)
       }
       cart.products = []
-      this.writeCarts(this.carts)
+      cart.markModified("products")
+      await cart.save()
     } catch (error) {
       throw error
     }
@@ -133,16 +85,10 @@ class CartManager {
 
   async deleteCart(cid) {
     try {
-      await this.readCarts()
-      const cartToDeleteIndex = this.carts.findIndex(cart => cart.id == cid)
-  
-      if (cartToDeleteIndex === -1) {
+      const cartDelete = await CartModel.findByIdAndDelete(cid)
+      if (!cartDelete) {
         throw new Error(`Cart with Id: ${cid} not found`)
       }
-  
-      this.carts.splice(cartToDeleteIndex, 1)
-  
-      await this.writeCarts(this.carts)
     } catch (error) {
       throw error
     }
