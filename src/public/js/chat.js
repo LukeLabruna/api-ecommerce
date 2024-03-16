@@ -35,7 +35,6 @@ socket.on("message", data => {
   log.innerHTML = ""
   data.forEach( message => {
       let userMessage = document.createElement("div")
-      userMessage.className = message.user === user && "currentUser"
       userMessage.innerHTML = `
       <h4>${message.user}:</h4>
       <p>${message.message}</p>`
