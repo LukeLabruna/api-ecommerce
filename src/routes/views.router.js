@@ -31,7 +31,6 @@ router.get("/realTimeProducts", async (req, res) => {
 
 router.get("/chat", async (req, res) => {
   const messages = await MessageModel.find()
-  console.log(messages)
   res.render("chat", {messages: messages})
 })
 

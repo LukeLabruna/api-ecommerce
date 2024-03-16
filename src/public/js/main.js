@@ -32,7 +32,6 @@ formNewProduct.addEventListener("submit", (e) => {
 
 formDeleteProduct.addEventListener("submit", (e) => {
   e.preventDefault()
-
   let id = document.getElementById("id").value
   socket.emit("deleteProduct", id)
   formDeleteProduct.reset()

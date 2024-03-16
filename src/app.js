@@ -30,36 +30,3 @@ const httpServer = app.listen(PORT, () => console.log(`Listening on http://local
 
 io(httpServer)
 
-// const io = socket(httpServer)
-
-// io.on("connection", (socket) => {
-
-//   console.log("Connected client")
-  
-//   socket.on("newProduct", async (data) => {
-//     try {
-//       await newProductManager.addProduct(data)
-//       socket.emit("success", {message: "Correctly aggregated product"})
-//       const products = await newProductManager.getProducts()
-//       socket.emit("products", products)
-//     } catch (error) {
-//       socket.emit("error", error.message)
-//     }
-//   })
-
-//   socket.on("deleteProduct", async (data) => {
-//     try {
-//       await newProductManager.deleteProduct(data)
-//       socket.emit("success", {message: `Product with id: ${data} correctly deleted`})
-//       const products = await newProductManager.getProducts()
-//       socket.emit("products", products)
-//     } catch (error) {
-//       socket.emit("error", error.message)
-//     }
-//   })
-
-//   socket.on("disconnect", () => {
-//     console.log("Diconnected client");
-//   });
-// })
-

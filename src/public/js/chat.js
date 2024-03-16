@@ -1,7 +1,8 @@
 const socket = io()
 
 const chatBox = document.getElementById("chatBox")
-
+const log = document.getElementById("messagesLogs")
+log.scrollTop = log.scrollHeight
 let user = sessionStorage.getItem("user") || ""
 
 if (!user) {
@@ -30,8 +31,6 @@ chatBox.addEventListener("keyup", (e) => {
 })
 
 socket.on("message", data => {
-  console.log(data)
-  const log = document.getElementById("messagesLogs");
   log.innerHTML = ""
   data.forEach( message => {
       let userMessage = document.createElement("div")
@@ -40,4 +39,5 @@ socket.on("message", data => {
       <p>${message.message}</p>`
       log.appendChild(userMessage)
   })
+  log.scrollTop = log.scrollHeight
 })

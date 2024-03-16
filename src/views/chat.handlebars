@@ -2,7 +2,7 @@
 
 <h1>Chat</h1>
 
-<div id="messagesLogs">
+<div class="messages" id="messagesLogs">
   {{#each messages}}
   <div>
     <h4>{{user}}:</h4>
@@ -11,8 +11,8 @@
   {{/each}}
 </div>
 
-<div>
-  <input type="text" id="chatBox">
+<div class="inputMessage">
+  <input type="text" id="chatBox" placeholder="Write a message">
 </div>
 
 

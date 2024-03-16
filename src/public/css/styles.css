@@ -7,6 +7,7 @@
 h1 {
   text-align: center;
   font-size: 5rem;
+  margin: 3rem;
 }
 
 .card {
@@ -66,4 +67,26 @@ h1 {
 .navBar li a {
   text-decoration: none;
   font-size: 2rem;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 80%;
+  height: 50vh;
+  margin: auto;
+  padding: 3rem;
+  overflow-y: auto;
+}
+
+.inputMessage  {
+  text-align: right;
+  width: 80%;
+  margin: 2rem auto;
+}
+
+.inputMessage input {
+  width: 100%;
+  padding: 0.5rem;
 }
