@@ -11,7 +11,10 @@ router.get("/products", async (req, res) => {
   const prevLink = `/products?${query ? `query=${query}&` : ""}${limit ? `limit=${limit}&` : ""}${sort ? `sort=${sort}&` : "" }page=${products.prevPage}`
   const nextLink = `/products?${query ? `query=${query}&` : ""}${limit ? `limit=${limit}&` : ""}${sort ? `sort=${sort}&` : "" }page=${products.nextPage}`
 
+  const status = products.docs.length > 0 ? "success" : "error"
+  
     res.render("home", {
+      status,
       payload: products.docs,
       currentPage: products.page,
       totalPages: products.totalPages,
