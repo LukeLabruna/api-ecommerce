@@ -94,6 +94,25 @@ class CartManager {
     }
   }
 
+  async updateProductQuantity(cid, pid, quantity) {
+    try {
+      const cart = await CartModel.findById(cid)
+      if (!cart) {
+        throw new Error(`Cart with Id: ${cid} not found`)
+      }
+      const productIndex = cart.products.findIndex(item => item.product._id.toString() === pid)
+      if (productIndex !== -1) {
+        cart.products[productIndex].quantity = quantity
+        cart.markModified('products')
+        await cart.save()
+      } else {
+        throw new Error(`Product with Id: ${cid} not found in Cart with Id: ${cid}`)
+      }
+      } catch (error) {
+
+      }
+    }
+
 }
 
 module.exports = CartManager
