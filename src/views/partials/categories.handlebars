@@ -1,0 +1,22 @@
+<div class="categories">
+  <a href="/products?query=Hardware">Hardware</a>
+  <a href="/products?query=Almacenamiento">Almacenamiento</a>
+  <a href="/products?query=Componentes">Componentes</a>
+  <a href="/products?query=Periféricos">Periféricos</a>
+  <a href="/products?query=Muebles">Muebles</a>
+  <a href="/products?query=Fotografía">Fotografía</a>
+  <a href="/products?query=Electrónica">Electronica</a>
+</div>
+<div class="sort">
+  <a href="/products?{{#if query}}query={{query}}&{{/if}}{{#if limit}}limit={{limit}}&{{/if}}sort=price">Lower price</a>
+  <a href="/products?{{#if query}}query={{query}}&{{/if}}{{#if limit}}limit={{limit}}&{{/if}}sort=-price">Higher price</a>
+</div>
+<div class="limit">
+  <h3>Products per page</h3>
+  <div>
+    <a href="/products?{{#if query}}query={{query}}&{{/if}}limit=5">5</a>
+    <a href="/products?{{#if query}}query={{query}}&{{/if}}limit=10">10</a>
+    <a href="/products?{{#if query}}query={{query}}&{{/if}}limit=15">15</a>
+    <a href="/products?{{#if query}}query={{query}}&{{/if}}limit=20">20</a>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="pagination">
+  {{#if hasPrevPage}}
+  <a href={{prevLink}} class="prevNext"> Previous </a>
+  {{else}}
+  <a disabled class="disabled"> Previous </a>
+  {{/if}}
+
+  <div class="numberPage">
+    {{#if prevPage}}
+    <a href={{prevLink}}><button>{{prevPage}}</button></a>
+    {{else}}
+    <a disabled><button disabled> ... </button></a>
+    {{/if}}
+    <a ><button class="currentPage">{{currentPage}}</button></a>
+    {{#if nextPage}}
+    <a href={{nextLink}}><button>{{nextPage}}</button></a>
+    {{else}}
+    <a disabled><button disabled> ... </button></a>
+    {{/if}}
+  </div>
+
+  {{#if hasNextPage}}
+  <a href={{nextLink}} class="prevNext"> Next </a>
+  {{else}}
+  <a disabled class="disabled"> Next </a>
+  {{/if}}
+</div>
+

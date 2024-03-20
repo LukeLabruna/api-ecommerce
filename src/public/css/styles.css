@@ -4,6 +4,15 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
+button {
+  cursor: pointer;
+}
+
 h1 {
   text-align: center;
   font-size: 5rem;
@@ -56,7 +65,7 @@ h1 {
   width: 100%;
 }
 
-.navBar{
+.navBar {
   display: flex;
   justify-content: center;
   gap: 3rem;
@@ -65,7 +74,6 @@ h1 {
 }
 
 .navBar li a {
-  text-decoration: none;
   font-size: 2rem;
 }
 
@@ -80,7 +88,7 @@ h1 {
   overflow-y: auto;
 }
 
-.inputMessage  {
+.inputMessage {
   text-align: right;
   width: 80%;
   margin: 2rem auto;
@@ -89,4 +97,73 @@ h1 {
 .inputMessage input {
   width: 100%;
   padding: 0.5rem;
+}
+
+.categories,
+.sort {
+  width: 60%;
+  margin: 1.5rem auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.categories a {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  padding: 0.5rem 1rem;
+}
+
+.sort {
+  margin: 2.5rem auto;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.sort a {
+  border-bottom: 1px solid;
+  padding: 0 0.5rem;
+}
+
+.pagination {
+  margin: 2rem auto;
+  display: flex;
+  justify-content: space-around;
+  width: 20%;
+  align-items: center;
+}
+
+.numberPage {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.numberPage button {
+  min-width: 2rem;
+  text-align: center;
+  padding: 0.4rem;
+}
+
+.numberPage .currentPage {
+  font-size: 1.5rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.pagination .disabled {
+  color: grey;
+}
+
+.limit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.limit div a {
+  border-bottom: 1px solid;
+  padding: 0 0.5rem;
+  margin: 0.5rem;
+}
+.limit div {
+  margin: 0.5rem 0;
 }

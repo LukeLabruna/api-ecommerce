@@ -2,8 +2,12 @@
 
 <h1>Products</h1>
 
+{{> categories}}
+
 <div class="products">
-  {{#each products}}
+  {{#each payload}}
   {{> card}}
   {{/each}}
 </div>
+
+{{> pagination}}

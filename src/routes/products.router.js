@@ -4,14 +4,13 @@ const ProductManager = require("../controllers/ProductManager.js")
 const newProductManager = new ProductManager()
 
 router.get("/", async (req, res) => {
-  const products = await newProductManager.getProducts()
-  let limit = parseInt(req.query.limit)
-  if (limit) {
-    const limitedProducts = products.slice(0, limit);
-    res.send(limitedProducts)
-    return
+  const {limit, query, sort, page } = req.query
+  try {
+  const products = await newProductManager.getProducts(limit, query, sort, page)
+    res.send(products)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
   }
-  res.send(products)
 })
 
 router.get("/:pid", async (req, res) => {

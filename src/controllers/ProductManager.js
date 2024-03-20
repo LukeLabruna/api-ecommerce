@@ -28,9 +28,15 @@ class ProductManager {
     }
   }
 
-  async getProducts() {
+  async getProducts(limit = 10, query, sort, page = 1 ) {
     try {
-      const products = await ProductModel.find()
+      const options = {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        sort
+      }
+      const queryOption = query ? {category : query} : {} 
+      const products = await ProductModel.paginate( queryOption , options )
       return products
     } catch (error) {
       throw error      
