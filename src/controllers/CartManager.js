@@ -113,6 +113,19 @@ class CartManager {
       }
     }
 
+    async updateCart(cid, updatedProducts) {
+      try {
+        const cart = await CartModel.findById(cid)
+        if (!cart) {
+            throw new Error(`Cart with Id: ${cid} not found`)
+        }
+        cart.products = updatedProducts
+        cart.markModified('products')
+        await cart.save()
+    } catch (error) {
+        throw error
+    }
+    }
 }
 
 module.exports = CartManager

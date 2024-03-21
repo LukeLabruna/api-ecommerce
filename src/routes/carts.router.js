@@ -14,8 +14,8 @@ router.post("/", async (req, res) => {
 })
 
 router.get("/:cid", async (req, res) => {
+  const { cid } = req.params
   try {
-    let cid = req.params.cid
     let cartProducts = await newCartManager.getProductsByCartId(cid)
     res.send(cartProducts)
   } catch (error) {
@@ -24,15 +24,12 @@ router.get("/:cid", async (req, res) => {
 })
 
 router.post("/:cid/product/:pid", async (req, res) => {
+  const { cid, pid } = req.params
   try {
-    let cid = req.params.cid
-    let pid = req.params.pid
-
-    const existingProduct = await newProductManager.getProductById(pid);
+  const existingProduct = await newProductManager.getProductById(pid);
     if (!existingProduct) {
       return res.status(404).json({ error: `Product with ID ${pid} not found` });
     }
-
     await newCartManager.addProduct(cid, pid)
     res.send({ status: "success", message: "Correctly aggregated cart" })
   } catch (error) {
@@ -50,9 +47,31 @@ router.delete("/:cid/products/:pid", async (req, res) => {
   }
 })
 
-router.delete("/:cid/products", async (req, res) => {
+router.put("/:cid", async (req, res) => {
+  const { cid } = req.params
+  const updatedProducts = req.body
   try {
-    let cid = req.params.cid
+    await newCartManager.updateCart(cid, updatedProducts)
+    res.send({status: "success", message: `Products correctly updated in cart with Id: ${cid}`})
+  } catch (error) {
+    res.status(404).json({ error: `${error.message}` })
+  }
+})
+
+router.put("/:cid/products/:pid", async (req, res) => {
+  const { cid, pid } = req.params
+  const quantity = req.body.quantity
+  try {
+    await newCartManager.updateProductQuantity(cid, pid, quantity)
+    res.send({status: "success", message: `Product with Id: ${pid} correctly updated in cart with Id: ${cid}`})
+  } catch (error) {
+    res.status(404).json({ error: `${error.message}` })
+  }
+})
+
+router.delete("/:cid", async (req, res) => {
+  const { cid } = req.params
+  try {
     await newCartManager.deleteAllProducts(cid)
     res.send({ status: "success", message: `All products correctly deleted from cart with Id: ${cid}`})
   } catch (error) {
@@ -60,25 +79,4 @@ router.delete("/:cid/products", async (req, res) => {
   }
 })
 
-router.delete("/:cid", async (req, res) => {
-  try {
-    let cid = req.params.cid
-    await newCartManager.deleteCart(cid)
-    res.send({status: "success", message: `Cart with Id: ${cid} correctly deleted`})
-  } catch (error) {
-    res.status(404).json({ error: `${error.message}` })
-  }
-})
-
-router.put("/:cid/products/:pid", async (req, res) => {
-  const {cid, pid} = req.params
-  const quantity = req.body.quantity
-  try {
-    await newCartManager.updateProductQuantity(cid, pid, quantity)
-    res.send({status: "success", message: `Product with Id: ${cid} correctly updated in cart with Id: ${pid}`})
-  } catch (error) {
-    res.status(404).json({ error: `${error.message}` })
-  }
-})
-
-module.exports = { router, newCartManager }
+module.exports = router

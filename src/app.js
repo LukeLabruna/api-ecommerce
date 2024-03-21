@@ -2,7 +2,7 @@ const express = require("express")
 const exphbs = require("express-handlebars")
 const io = require("./sockets.js")
 const { router: productsRouter } = require("./routes/products.router.js")
-const { router: cartsRouter } = require("./routes/carts.router.js")
+const cartsRouter = require("./routes/carts.router.js")
 const viewsRouter = require("./routes/views.router.js")
 require("./database.js")
 
