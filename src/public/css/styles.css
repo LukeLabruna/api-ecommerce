@@ -197,6 +197,10 @@ h1 {
   width: 8rem;
 }
 
+#total {
+  text-align: center;
+}
+
 .product {
   position: absolute;
   top: 25%;

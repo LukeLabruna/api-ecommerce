@@ -2,8 +2,8 @@ const express = require("express")
 const router = express.Router()
 const { newCartManager } = require("../api/carts.api.router.js")
 
-router.get("/", async (req, res) => {
-  const { cid } = req.query
+router.get("/:cid", async (req, res) => {
+  const { cid } = req.params
   try {
     const cartProducts = await newCartManager.getProductsByCartId(cid)
     res.render("cart", {

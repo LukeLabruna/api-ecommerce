@@ -2,8 +2,8 @@ const express = require("express")
 const router = express.Router()
 const { newProductManager } = require("../api/products.api.router.js")
 
-router.get("/", async (req, res) => {
-  const { pid } = req.query
+router.get("/:pid", async (req, res) => {
+  const { pid } = req.params
   try {
     const product = await newProductManager.getProductById(pid)
     res.render("productDetail", { productDetail: product })
