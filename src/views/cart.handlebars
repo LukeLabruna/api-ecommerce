@@ -1,0 +1,12 @@
+{{> navBar}}
+
+<h1>Cart</h1>
+<h3 class="cartId">ID: {{cid}}</h3>
+
+<h2 class="cartProductsTitle">Products</h2>
+
+<div class="cartProducts">
+  {{#each cartProducts}}
+  {{> cardCart}}
+  {{/each}}
+</div>

@@ -47,7 +47,7 @@ class ProductManager {
     try {
       const product = await ProductModel.findById(id)
       if (!product) {
-        throw new Error(`Product with Id: ${id} not found`)
+        throw new Error({ status:"error", message:`Product with Id: ${id} not found`})
       }
       return product
     } catch (error) {

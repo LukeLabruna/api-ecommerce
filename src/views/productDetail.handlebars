@@ -1,0 +1,19 @@
+{{> navBar}}
+
+<div class="product">
+  <h1 class="titleDetail">{{productDetail.title}}</h1>
+  <div class="productDetail">
+    <img
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLhZ20NCp7B8aXMv9r7CVxomuhhoPVyT3AcJceeVqmoASVe4m8U6d-mgd0YJWQqfbdfOU&usqp=CAU"
+      alt="no image available">
+    <div class="detail">
+      <p>Description: {{productDetail.description}} </p>
+      <p>Category: {{productDetail.category}}</p>
+      <p>Price: ${{productDetail.price}}</p>
+      <button id="addCart" name="{{productDetail._id}}">Add to cart</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/products.js"></script>

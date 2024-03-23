@@ -30,7 +30,7 @@ class CartManager {
       if (!cart) {
         throw new Error(`Cart with Id: ${cid} not found`);
       }
-      const productExists = cart.products.find(p => p.product.toString() === pid)
+      const productExists = cart.products.find(p => p.product._id.toString() === pid)
       if (productExists) {
         productExists.quantity += quantity;
       } else {

@@ -167,3 +167,56 @@ h1 {
 .limit div {
   margin: 0.5rem 0;
 }
+
+.cartId, .cartProductsTitle {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.cartProducts {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.titleDetail { 
+  font-size: 3rem;
+}
+
+.cardCart {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.cardCart h3 {
+  width: 25rem;
+}
+
+.cardCart p, .cardCart img{
+  width: 8rem;
+}
+
+.product {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.productDetail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.detail button {
+  width: 100%;
+}

@@ -67,7 +67,7 @@ socket.on("error", (data) => {
     icon: "error",
     title: "Oops...",
     text: `${data}`
-  });
+  })
 })
 
 socket.on("success", (data) => {

@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
-const CartManager = require("../controllers/CartManager.js")
-const newCartManager = new CartManager("./src/models/carts.json")
-const { newProductManager } = require("./products.router.js")
+const CartManager = require("../../controllers/CartManager.js")
+const newCartManager = new CartManager()
+const { newProductManager } = require("./products.api.router.js")
 
 router.post("/", async (req, res) => {
   try {
@@ -27,11 +27,11 @@ router.post("/:cid/product/:pid", async (req, res) => {
   const { cid, pid } = req.params
   try {
   const existingProduct = await newProductManager.getProductById(pid);
-    if (!existingProduct) {
-      return res.status(404).json({ error: `Product with ID ${pid} not found` });
+    if (existingProduct.status === "error") {
+      return res.status(404).json({status:"error", message: `${existingProduct.message}` });
     }
     await newCartManager.addProduct(cid, pid)
-    res.send({ status: "success", message: "Correctly aggregated cart" })
+    res.json({ status: "success", message: "Correctly aggregated cart" })
   } catch (error) {
     res.status(404).json({ error: `${error.message}` })
   }
@@ -79,4 +79,4 @@ router.delete("/:cid", async (req, res) => {
   }
 })
 
-module.exports = router
+module.exports = { router, newCartManager }
