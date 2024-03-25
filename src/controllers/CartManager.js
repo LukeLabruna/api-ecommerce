@@ -53,7 +53,7 @@ class CartManager {
       if (!cart) {
         throw new Error(`Cart with Id: ${cid} not found`)
       }
-      const productIndex = cart.products.findIndex(p => p.product.toString() === pid)
+      const productIndex = cart.products.findIndex(p => p.product._id.toString() === pid)
       if (productIndex === -1) {
         throw new Error(`Product with id ${pid} not found`)
       } else {

@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" id={{_id}}>
   {{#if thumbnail.length}}
     {{#each thumbnail}}
       <img src={{this}} alt={{title}}>
@@ -11,5 +11,5 @@
   <p>Price: ${{price}}</p>
   <p>Description: {{description}} </p>
   <a href="/product/{{_id}}"><button>Detail</button></a>
-  <button id="addCart" name="{{_id}}">Add to cart</button>
+  <button class="addCart">Add to cart</button>
 </div>
