@@ -17,13 +17,21 @@ cards.forEach(card => {
           Swal.fire({
             title: "Good job!",
             text: `${data.message}`,
-            icon: "success"
+            icon: "success",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000
           })
         } else if (data.status === "error") {
           Swal.fire({
             title: "Oops...",
             text: `${data.message}`,
-            icon: "error"
+            icon: "error",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000
           })
         }
       })
@@ -31,7 +39,11 @@ cards.forEach(card => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: `${e.error}`
+          text: `${e.error}`,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000
         })
       })
   })

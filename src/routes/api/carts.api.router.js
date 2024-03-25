@@ -31,7 +31,7 @@ router.post("/:cid/product/:pid", async (req, res) => {
       return res.status(404).json({status:"error", message: `${existingProduct.message}` });
     }
     await newCartManager.addProduct(cid, pid)
-    res.json({ status: "success", message: "Correctly aggregated cart" })
+    res.json({ status: "success", message: "Correctly aggregated to cart" })
   } catch (error) {
     res.status(404).json({ error: `${error.message}` })
   }
@@ -41,7 +41,7 @@ router.delete("/:cid/product/:pid", async (req, res) => {
   const {cid, pid} = req.params
   try {
     await newCartManager.deleteProductById(cid, pid)
-    res.send({ status: "success", message: `Product with id: ${pid} correctly deleted from cart with id: ${cid}` })
+    res.json({ status: "success", message: `Product with id: ${pid} correctly deleted from cart with id: ${cid}` })
   } catch (error) {
     res.status(404).json({ error: `${error.message}` })
   }
@@ -63,7 +63,7 @@ router.put("/:cid/product/:pid", async (req, res) => {
   const quantity = req.body.quantity
   try {
     await newCartManager.updateProductQuantity(cid, pid, quantity)
-    res.send({status: "success", message: `Product with Id: ${pid} correctly updated in cart with Id: ${cid}`})
+    res.json({status: "success", message: `Product with Id: ${pid} correctly updated in cart with Id: ${cid}`})
   } catch (error) {
     res.status(404).json({ error: `${error.message}` })
   }

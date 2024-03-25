@@ -31,6 +31,41 @@ cards.forEach(card => {
         quantity: parseInt(quantity.value)
       })
     })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          Swal.fire({
+            title: "Good job!",
+            text: `${data.message}`,
+            icon: "success",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000
+          })
+        } else if (data.status === "error") {
+          Swal.fire({
+            title: "Oops...",
+            text: `${data.message}`,
+            icon: "error",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000
+          })
+        }
+      })
+      .catch((e) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${e.error}`,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000
+        })
+      })
   })
 
   dlt.addEventListener("click", () => {
@@ -40,10 +75,44 @@ cards.forEach(card => {
         "Content-Type": "application/json"
       }
     })
-    
-    setTimeout(() => {
-      location.reload()
-    }, 500)
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          Swal.fire({
+            title: "Good job!",
+            text: `${data.message}`,
+            icon: "success",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000
+          })
+          setTimeout(() => {
+            location.reload()
+          }, 500)
+        } else if (data.status === "error") {
+          Swal.fire({
+            title: "Oops...",
+            text: `${data.message}`,
+            icon: "error",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000
+          })
+        }
+      })
+      .catch((e) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${e.error}`,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000
+        })
+      })
   })
 
   total += updateSubtotal()
