@@ -4,6 +4,7 @@ const { newProductManager } = require("../api/products.api.router.js")
 
 router.get("/", async (req, res) => {
   const { limit, query, sort, page} = req.query
+  const { user } = req.session
   try {
     
     const products = await newProductManager.getProducts(limit, query, sort, page)
@@ -24,7 +25,8 @@ router.get("/", async (req, res) => {
       nextLink,
       query,
       sort,
-      limit
+      limit,
+      user
     })
   } catch (error) {
     console.log(error)

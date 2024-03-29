@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
     } else if (error.message === "Product missing fields") {
       res.status(409).json({ error: `${error.message}` })
     } else {
-      res.status(500).send({ status: "error", message: "Internal Server Error" })
+      res.status(500).json({ status: "error", message: "Internal Server Error" })
     }
   }
 })
