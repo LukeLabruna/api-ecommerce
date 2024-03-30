@@ -16,7 +16,7 @@ router.get("/logout", (req, res) => {
   if(req.session.login) {
       req.session.destroy();
   }
-  res.redirect("/login");
+  res.redirect("/products");
 })
 
 module.exports = router

@@ -18,7 +18,6 @@ router.post("/register", isAdmin, async (req, res) => {
       return res.status(400).json({status: "error", message: "The email is already registered"});
   }
   const newUser = await UserModel.create({first_name, last_name, email, password, age, role: req.role})
-  console.log(newUser)
   req.session.login = true
   req.session.user = {...newUser._doc}
   res.redirect("/products")
@@ -64,7 +63,7 @@ router.get("/logout", (req, res) => {
   if(req.session.login) {
       req.session.destroy()
   }
-  res.redirect("/products")
+  res.redirect("/user/login")
 })
 
 module.exports = router

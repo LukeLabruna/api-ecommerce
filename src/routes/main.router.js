@@ -1,3 +1,4 @@
+const homeViewsRouter = require("./views/home.views.router.js")
 const productsViewsRouter = require("./views/products.views.router.js")
 const cartViewsRouter = require("./views/cart.views.router.js")
 const realTimeProductsViewsRouter = require("./views/realTimeProducts.views.router.js")
@@ -13,6 +14,7 @@ const routes = (app) => {
   app.use("/api/products", productsApiRouter)
   app.use("/api/carts", cartsApiRouter)
   app.use("/api/user", userApiRouter)
+  app.use("/", homeViewsRouter)
   app.use("/products", productsViewsRouter)
   app.use("/realTimeProducts", realTimeProductsViewsRouter)
   app.use("/chat", chatViewsRouter)
