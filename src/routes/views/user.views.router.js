@@ -19,4 +19,11 @@ router.get("/logout", (req, res) => {
   res.redirect("/products");
 })
 
+router.get("/profile", (req, res) => {
+  if (req.session.login) {
+    return res.render("profile", {user: req.session.user})
+  }
+  res.redirect("/user/login")
+})
+
 module.exports = router

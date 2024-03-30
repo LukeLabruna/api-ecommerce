@@ -1,0 +1,13 @@
+{{> navBar}}
+
+<h1>Profile</h1>
+
+<div class="userProfile">
+  <h2>Welcome {{user.name}}</h2>
+  <p>Email: {{user.email}}</p>
+  {{#if user.age}}
+  <p>Age: {{user.age}}</p>
+  {{/if}}
+  <p>Role: {{user.role}}</p>
+  <a href="/user/logout"><button>Logout</button></a>
+</div>

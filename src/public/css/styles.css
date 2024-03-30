@@ -242,7 +242,7 @@ h1 {
   margin: 0.3rem;
 }
 
-.loginForm, .registerForm {
+.loginForm, .registerForm, .userProfile {
   display: flex;
   flex-direction: column;
   width: 25%;
@@ -266,4 +266,8 @@ h1 {
   right: 1rem;
   top: 1rem;
   text-align: right;
+}
+
+.userProfile {
+  text-align: center;
 }
