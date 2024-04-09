@@ -1,10 +1,12 @@
 const express = require("express")
 const exphbs = require("express-handlebars")
-const io = require("./sockets.js")
+const io = require("./utils/sockets.js")
 require("./database.js")
 const mainRoutes = require("./routes/main.router.js")
 require("dotenv").config()
-const mainSession = require("./session.js")
+const mainSession = require("./utils/session.js")
+const passport = require("passport")
+const initializePassport = require("./config/passport.config.js")
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -26,6 +28,10 @@ app.set("views", "./src/views")
 
 mainSession(app)
 mainRoutes(app)
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 const httpServer = app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`))
 

@@ -26,4 +26,12 @@ router.get("/profile", (req, res) => {
   res.redirect("/user/login")
 })
 
+router.get("/failedlogin", (req, res) => {
+  res.render("failedLogin")
+})
+
+router.get("/failedregister", (req, res) => {
+  res.render("failedRegister")
+})
+
 module.exports = router

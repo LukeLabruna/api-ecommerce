@@ -1,6 +1,6 @@
 const socket = require("socket.io")
-const MessageModel = require("./models/message.model.js");
-const { newProductManager } = require("./controllers/ProductManager.js")
+const MessageModel = require("../models/message.model.js");
+const { newProductManager } = require("../controllers/ProductManager.js")
 
 const io = (httpServer) => {
 
