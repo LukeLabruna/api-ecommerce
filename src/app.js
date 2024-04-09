@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use('*/css', express.static('src/public/css'));
+app.use('*/css', express.static('src/public/css'))
 app.use('*/js', express.static('src/public/js'))
 
 
@@ -29,9 +29,9 @@ app.set("views", "./src/views")
 mainSession(app)
 mainRoutes(app)
 
-initializePassport();
-app.use(passport.initialize());
-app.use(passport.session());
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 const httpServer = app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`))
 
