@@ -6,6 +6,7 @@ class CartManager {
     try {
       const newCart = new CartModel({ products: [] })
       await newCart.save()
+      return newCart
     } catch (error) {
       throw error
     }

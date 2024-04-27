@@ -1,4 +1,4 @@
-const cid = "65fb791d402eeb46629002ea"
+const cid = document.getElementById("cid").innerHTML
 const cards = document.querySelectorAll('.card')
 
 cards.forEach(card => {

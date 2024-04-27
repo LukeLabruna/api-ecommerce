@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local')
 const UserModel = require("../models/user.model")
 const { createHash, isValidPassword } = require("../utils/hashBcrypt.js")
 const GitHubStrategy = require("passport-github2")
+const { newCartManager } = require("../routes/api/carts.api.router.js")
 require("dotenv").config()
 
 const initializePassport = () => {
@@ -15,12 +16,14 @@ const initializePassport = () => {
     try {
       const user = await UserModel.findOne({ email })
       if (user) return done(null, false)
+      const newCart = await newCartManager.addCart()
       const newUser = {
         first_name,
         last_name,
         email,
         age,
-        password: createHash(password)
+        password: createHash(password),
+        cartId: newCart._id
       }
       const result = await UserModel.create(newUser)
       done(null, result)
@@ -53,12 +56,14 @@ const initializePassport = () => {
     try {
       const user = await UserModel.findOne({ email: profile._json.email })
       if (!user) {
+        const newCart = await newCartManager.addCart()
         const newUser = {
           first_name: profile._json.name.split(" ")[0],
           last_name: profile._json.name.split(" ")[profile._json.name.split(" ").length - 1],
           age: 0,
           email: profile._json.email,
           password: createHash("noPassword"),
+          cartId: newCart._id
         }
         const result = await UserModel.create(newUser);
         done(null, result);

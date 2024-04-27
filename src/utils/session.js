@@ -6,7 +6,7 @@ const mainSession = (app) => {
   app.use(session({
     secret: "secretCoder",
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: `mongodb+srv://${process.env.USER_MONGO}:${process.env.PASSWORD_MONGO}@cluster0.ud53fbh.mongodb.net/${process.env.DB_MONGO}?retryWrites=true&w=majority&appName=Cluster0`,
       ttl: 24 * 60 * 60

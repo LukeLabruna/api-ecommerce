@@ -4,14 +4,6 @@ const CartManager = require("../../controllers/CartManager.js")
 const newCartManager = new CartManager()
 const { newProductManager } = require("./products.api.router.js")
 
-router.post("/", async (req, res) => {
-  try {
-    await newCartManager.addCart()
-    res.send({ status: "success", message: "Correctly aggregated cart" })
-  } catch (error) {
-    res.status(500).send({ status: "error", message: "Internal Server Error" })
-  }
-})
 
 router.get("/:cid", async (req, res) => {
   const { cid } = req.params

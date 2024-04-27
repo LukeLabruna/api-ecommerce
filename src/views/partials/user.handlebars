@@ -4,8 +4,9 @@
   <p>Welcome {{user.name}}</p>
   <p>Email: {{user.email}}</p>
   <p>Role: {{user.role}}</p>
+  <p id="cid">{{user.cartId}}</p>
   {{#if user.age}}
-  <p>Age: {{user.age}}</p>
+  <p>Age: {{user.age}} </p>
   {{/if}}
   <a href="/user/profile"><button>Profile</button></a>
   <a href="/user/logout"><button>Logout</button></a>

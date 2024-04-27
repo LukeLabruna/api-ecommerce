@@ -21,11 +21,14 @@ const userSchema = new mongoose.Schema({
   },
   age: {
     type: Number,
-    // required: true
   },
   role: {
     type: String,
     default: "user"
+  },
+  cartId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "carts"
   }
 })
 

@@ -12,12 +12,15 @@ router.post("/register",
 
     if (!req.user) return res.status(400).send("Invalid credentials")
 
-    const { first_name, last_name, email, role } = req.user
+    const { first_name, last_name, email, role, cartId } = req.user
+
+    console
 
     req.session.user = {
       email,
       name: `${first_name} ${last_name}`,
-      role
+      role,
+      cartId
     }
     req.session.login = true
 
@@ -33,12 +36,13 @@ router.post("/login",
 
     if (!req.user) return res.status(400).send("Invalid credentials")
 
-    const { first_name, last_name, email, role } = req.user
+    const { first_name, last_name, email, role, cartId } = req.user
 
     req.session.user = {
       email,
       name: `${first_name} ${last_name}`,
-      role
+      role,
+      cartId
     }
     req.session.login = true
 
