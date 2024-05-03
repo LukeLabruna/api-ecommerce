@@ -1,10 +1,11 @@
 const express = require("express")
 const router = express.Router()
 const { newProductManager } = require("../api/products.api.router.js")
+const passport = require("passport")
 
-router.get("/", async (req, res) => {
+router.get("/", passport.authenticate("jwt", {session:false}), async (req, res) => {
   const { limit, query, sort, page} = req.query
-  const { user } = req.session
+  const { user } = req.user
   
   try {
     

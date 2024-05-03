@@ -1,10 +1,11 @@
 const express = require("express")
 const exphbs = require("express-handlebars")
 const io = require("./utils/sockets.js")
-require("./database.js")
+require("./utils/database.js")
 const mainRoutes = require("./routes/main.router.js")
+const cookieParser = require("cookie-parser");
 require("dotenv").config()
-const mainSession = require("./utils/session.js")
+
 const passport = require("passport")
 const initializePassport = require("./config/passport.config.js")
 
@@ -16,7 +17,6 @@ app.use(express.json())
 app.use('*/css', express.static('src/public/css'))
 app.use('*/js', express.static('src/public/js'))
 
-
 app.engine("handlebars", exphbs.engine({
   runtimeOptions: {
     allowProtoPropertiesByDefault: true,
@@ -26,14 +26,15 @@ app.engine("handlebars", exphbs.engine({
 app.set("view engine", "handlebars")
 app.set("views", "./src/views")
 
-mainSession(app)
+app.use(cookieParser())
+
+app.use(passport.initialize())
+initializePassport()
+
 mainRoutes(app)
 
-initializePassport()
-app.use(passport.initialize())
-app.use(passport.session())
+io(httpServer)
 
 const httpServer = app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`))
 
-io(httpServer)
 
