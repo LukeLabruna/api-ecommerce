@@ -1,6 +1,7 @@
 const socket = require("socket.io")
 const MessageModel = require("../models/message.model.js");
-const { newProductManager } = require("../controllers/ProductManager.js")
+const ProductService = require("../service/productService.js")
+const productService = new ProductService
 
 const io = (httpServer) => {
 
@@ -12,9 +13,9 @@ const io = (httpServer) => {
 
     socket.on("newProduct", async (data) => {
       try {
-        await newProductManager.addProduct(data)
+        await productService.addProduct(data)
         socket.emit("success", { message: "Correctly aggregated product" })
-        const products = await newProductManager.getProducts()
+        const products = await productService.getProducts()
         socket.emit("products", products)
       } catch (error) {
         socket.emit("error", error.message)
@@ -23,9 +24,9 @@ const io = (httpServer) => {
 
     socket.on("deleteProduct", async (data) => {
       try {
-        await newProductManager.deleteProduct(data)
+        await productService.deleteProduct(data)
         socket.emit("success", { message: `Product with id: ${data} correctly deleted` })
-        const products = await newProductManager.getProducts()
+        const products = await productService.getProducts()
         socket.emit("products", products)
       } catch (error) {
         socket.emit("error", error.message)

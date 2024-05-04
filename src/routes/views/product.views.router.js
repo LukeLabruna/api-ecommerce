@@ -1,11 +1,12 @@
 const express = require("express")
 const router = express.Router()
-const { newProductManager } = require("../api/products.api.router.js")
+const ProductService = require("../../service/productService.js")
+const productService = new ProductService
 
 router.get("/:pid", async (req, res) => {
   const { pid } = req.params
   try {
-    const product = await newProductManager.getProductById(pid)
+    const product = await productService.getProductById(pid)
     res.render("productDetail", { productDetail: product })
   } catch (error) {
     console.log(error)

@@ -1,9 +1,10 @@
 const express = require("express")
 const router = express.Router()
-const { newProductManager } = require("../api/products.api.router.js")
+const ProductService = require("../../service/productService.js")
+const productService = new ProductService
 
 router.get("/", async (req, res) => {
-  const products = await newProductManager.getProducts()
+  const products = await productService.getProducts()
   res.render("realTimeProducts", { products: products.docs })
 })
 

@@ -6,8 +6,8 @@ const chatViewsRouter = require("./views/chat.views.router.js")
 const productViewsRouter = require("./views/product.views.router.js")
 const userViewsRouter = require("./views/user.views.router.js")
 
-const { router: productsApiRouter } = require("./api/products.api.router.js")
-const { router: cartsApiRouter } = require("./api/carts.api.router.js")
+const productsApiRouter = require("./api/products.api.router.js")
+const cartsApiRouter = require("./api/carts.api.router.js")
 const userApiRouter = require("./api/user.api.router.js")
 const sessionApiRouter = require("./api/session.api.router.js")
 

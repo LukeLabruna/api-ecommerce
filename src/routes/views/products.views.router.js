@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
-const { newProductManager } = require("../api/products.api.router.js")
+const ProductService = require("../../service/productService.js")
+const productService = new ProductService
 const passport = require("passport")
 
 router.get("/", passport.authenticate("jwt", {session:false}), async (req, res) => {
@@ -8,7 +9,7 @@ router.get("/", passport.authenticate("jwt", {session:false}), async (req, res) 
   const user = req.user
   try {
     
-    const products = await newProductManager.getProducts(limit, query, sort, page)
+    const products = await productService.getProducts(limit, query, sort, page)
     const prevLink = `/products?${query ? `query=${query}&` : ""}${limit ? `limit=${limit}&` : ""}${sort ? `sort=${sort}&` : ""}page=${products.prevPage}`
     const nextLink = `/products?${query ? `query=${query}&` : ""}${limit ? `limit=${limit}&` : ""}${sort ? `sort=${sort}&` : ""}page=${products.nextPage}`
     const status = products.docs.length > 0 ? "success" : "error"
