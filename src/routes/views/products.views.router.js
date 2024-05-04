@@ -5,8 +5,7 @@ const passport = require("passport")
 
 router.get("/", passport.authenticate("jwt", {session:false}), async (req, res) => {
   const { limit, query, sort, page} = req.query
-  const { user } = req.user
-  
+  const user = req.user
   try {
     
     const products = await newProductManager.getProducts(limit, query, sort, page)

@@ -3,12 +3,15 @@ const router = express.Router()
 const passport = require("passport")
 
 router.get("/register", (req, res) => {
+  if (req?.cookies["userToken"]) {
+    return res.redirect("/profile")
+  }
   res.render("register")
 })
 
-router.get("/login", passport.authenticate("jwt", {session:false}), (req, res) => {
-  if (req.user) {
-    return res.redirect("/products")
+router.get("/login", (req, res) => {
+  if (req?.cookies["userToken"]) {
+    return res.redirect("/profile")
   }
   res.render("login")
 })
@@ -19,13 +22,5 @@ router.get("/profile", passport.authenticate("jwt", {session:false}), (req, res)
   }
   res.redirect("/user/login")
 })
-
-// router.get("/failedlogin", (req, res) => {
-//   res.render("failedLogin")
-// })
-
-// router.get("/failedregister", (req, res) => {
-//   res.render("failedRegister")
-// })
 
 module.exports = router

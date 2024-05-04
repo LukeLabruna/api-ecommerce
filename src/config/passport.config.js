@@ -85,13 +85,16 @@ require("dotenv").config()
 
 // }
 
+const JWTStrategy = jwt.Strategy
+const ExtractJwt = jwt.ExtractJwt
+
 const initializePassport = () => {
   passport.use("jwt", new JWTStrategy({
     jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
     secretOrKey: process.env.SECRET_KEY_TOKEN,
   }, async (jwt_payload, done) => {
     try {
-      return done(null, jwt_payload);
+      return done(null, jwt_payload)
     } catch (error) {
       return done(error)
     }

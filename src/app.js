@@ -33,8 +33,7 @@ initializePassport()
 
 mainRoutes(app)
 
-io(httpServer)
-
 const httpServer = app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`))
 
+io(httpServer)
 

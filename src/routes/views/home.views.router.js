@@ -1,12 +1,11 @@
 const express = require("express")
 const router = express.Router()
-const passport = require("passport")
 
-router.get("/", passport.authenticate("jwt", {session:false}), (req, res) => {
-  if (req.user) {
-    return res.redirect("/products")
+router.get("/", (req, res) => {
+  if (!req?.cookies["userToken"]) {
+    return res.redirect("/user/login")
   }
-  res.redirect("/user/login")
+  res.redirect("/products")
 })
 
 module.exports = router

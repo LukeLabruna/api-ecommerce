@@ -1,6 +1,6 @@
 const cards = document.querySelectorAll('.cardCart')
 let total = 0
-const cid = document.getElementById("cid").innerHTML
+const cid = document.getElementById("cartId").innerHTML
 
 cards.forEach(card => {
   const price = parseInt(card.querySelector(".price").innerHTML)

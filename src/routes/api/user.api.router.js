@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const UserModel = require("../../models/user.model")
 const passport = require("passport")
-const { createHash, isValidPassword } = require("../utils/hashBcrypt.js")
+const { createHash, isValidPassword } = require("../../utils/hashBcrypt.js")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
