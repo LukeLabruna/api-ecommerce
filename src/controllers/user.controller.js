@@ -1,7 +1,8 @@
 const UserService = require("../service/userService.js")
 const userService = new UserService
 const jwt = require("jsonwebtoken")
-require("dotenv").config()
+const configObj = require("../config/env.config.js")
+const { SECRET_KEY_TOKEN } = configObj
 
 class UserController {
 
@@ -15,7 +16,7 @@ class UserController {
         name: `${newUser.first_name} ${newUser.last_name}`,
         role: newUser.role,
         cartId: newUser.cartId
-      }, process.env.SECRET_KEY_TOKEN, { expiresIn: "24h" })
+      }, SECRET_KEY_TOKEN, { expiresIn: "24h" })
 
       res.cookie("userToken", token, {
         maxAge: 24 * 3600 * 1000,
@@ -38,7 +39,7 @@ class UserController {
         name: `${user.first_name} ${user.last_name}`,
         role: user.role,
         cartId: user.cartId
-      }, process.env.SECRET_KEY_TOKEN, { expiresIn: "24h" })
+      }, SECRET_KEY_TOKEN, { expiresIn: "24h" })
 
       res.cookie("userToken", token, {
         maxAge: 24 * 3600 * 1000,
@@ -60,7 +61,7 @@ class UserController {
 
   async githubcallback(req, res) {
     const user = req.user
-    const token = jwt.sign({ user }, process.env.SECRET_KEY_TOKEN, { expiresIn: "24h" })
+    const token = jwt.sign({ user }, SECRET_KEY_TOKEN, { expiresIn: "24h" })
     res.cookie("userToken", token, {
       maxAge: 24 * 3600 * 1000,
       httpOnly: true,

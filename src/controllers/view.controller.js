@@ -1,7 +1,7 @@
-const CartService = require("../../service/cartService.js")
+const CartService = require("../service/cartService.js")
 const cartService = new CartService
 const MessageModel = require("../models/message.model.js")
-const ProductService = require("../../service/productService.js")
+const ProductService = require("../service/productService.js")
 const productService = new ProductService
 
 class ViewController {
