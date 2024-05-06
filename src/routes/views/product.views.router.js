@@ -1,17 +1,9 @@
 const express = require("express")
 const router = express.Router()
-const ProductService = require("../../service/productService.js")
-const productService = new ProductService
+const ViewController = require("../../controllers/view.controller.js")
+const viewController = new ViewController
 
-router.get("/:pid", async (req, res) => {
-  const { pid } = req.params
-  try {
-    const product = await productService.getProductById(pid)
-    res.render("productDetail", { productDetail: product })
-  } catch (error) {
-    console.log(error)
-    // res.render("error", error)
-  }
-})
+
+router.get("/:pid", viewController.productDetail)
 
 module.exports = router

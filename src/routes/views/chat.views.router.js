@@ -1,10 +1,8 @@
 const express = require("express")
 const router = express.Router()
-const MessageModel = require("../../models/message.model.js")
+const ViewController = require("../../controllers/view.controller.js")
+const viewController = new ViewController
 
-router.get("/", async (req, res) => {
-  const messages = await MessageModel.find()
-  res.render("chat", { messages: messages })
-})
+router.get("/", viewController.chat)
 
 module.exports = router

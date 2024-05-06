@@ -1,11 +1,8 @@
 const express = require("express")
 const router = express.Router()
-const ProductService = require("../../service/productService.js")
-const productService = new ProductService
+const ViewController = require("../../controllers/view.controller.js")
+const viewController = new ViewController
 
-router.get("/", async (req, res) => {
-  const products = await productService.getProducts()
-  res.render("realTimeProducts", { products: products.docs })
-})
+router.get("/", viewController.realTimeProducts)
 
 module.exports = router

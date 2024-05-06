@@ -1,26 +1,12 @@
 const express = require("express")
 const router = express.Router()
 const passport = require("passport")
+const ViewController = require("../../controllers/view.controller.js")
+const viewController = new ViewController
 
-router.get("/register", (req, res) => {
-  if (req?.cookies["userToken"]) {
-    return res.redirect("/profile")
-  }
-  res.render("register")
-})
 
-router.get("/login", (req, res) => {
-  if (req?.cookies["userToken"]) {
-    return res.redirect("/profile")
-  }
-  res.render("login")
-})
-
-router.get("/profile", passport.authenticate("jwt", {session:false}), (req, res) => {
-  if (req.user) {
-    return res.render("profile", {user: req.user})
-  }
-  res.redirect("/user/login")
-})
+router.get("/register", viewController.userRegister)
+router.get("/login", viewController.userLogin)
+router.get("/profile", passport.authenticate("jwt", {session:false}), viewController.userProfile)
 
 module.exports = router

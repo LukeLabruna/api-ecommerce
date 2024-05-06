@@ -1,19 +1,8 @@
 const express = require("express")
 const router = express.Router()
-const CartService = require("../../service/cartService.js")
-const cartService = new CartService 
+const ViewController = require("../../controllers/view.controller.js")
+const viewController = new ViewController
 
-router.get("/:cid", async (req, res) => {
-  const { cid } = req.params
-  try {
-    const cartProducts = await cartService.getProductsByCartId(cid)
-    res.render("cart", {
-      cartProducts: cartProducts,
-      cid
-    })
-  } catch (error) {
-    console.log(error)
-  }
-})
+router.get("/:cid", viewController.cartById)
 
 module.exports = router

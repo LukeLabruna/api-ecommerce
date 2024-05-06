@@ -1,11 +1,8 @@
 const express = require("express")
 const router = express.Router()
+const ViewController = require("../../controllers/view.controller.js")
+const viewController = new ViewController
 
-router.get("/", (req, res) => {
-  if (!req?.cookies["userToken"]) {
-    return res.redirect("/user/login")
-  }
-  res.redirect("/products")
-})
+router.get("/", viewController.home)
 
 module.exports = router
