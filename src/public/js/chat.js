@@ -3,23 +3,7 @@ const socket = io()
 const chatBox = document.getElementById("chatBox")
 const log = document.getElementById("messagesLogs")
 log.scrollTop = log.scrollHeight
-let user = sessionStorage.getItem("user") || ""
-
-if (!user) {
-  Swal.fire({
-    title: "Auth", 
-    input: "text",
-    text: "Insert username", 
-    inputValidator: (value) => {
-        return !value && "Username required"
-    }, 
-    allowOutsideClick: false,
-  }).then( result => {
-    user = result.value
-    user = user.charAt(0).toUpperCase() + user.slice(1)
-    sessionStorage.setItem("user", user)
-  })
-}
+let user = document.getElementById("userName").innerHTML
 
 chatBox.addEventListener("keyup", (e) => {
   if(e.key === "Enter") {

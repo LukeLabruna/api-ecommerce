@@ -1,8 +1,12 @@
 const passport = require("passport")
-const UserModel = require("../models/user.model")
 const GitHubStrategy = require("passport-github2")
 const jwt = require("passport-jwt")
+const UserRepository = require("../repository/userRepository.js")
+const CartRepository = require("../repository/cartRepository.js")
 const configObj = require("./env.config")
+const { createHash } = require('../utils/hashBcrypt.js')
+const userRepository = new UserRepository
+const cartRepository = new CartRepository
 const { SECRET_KEY_TOKEN, CLIENT_ID_GH, CLIENT_SECRET_GH, CALLBACK_URL_GH } = configObj
 
 const JWTStrategy = jwt.Strategy
@@ -14,10 +18,14 @@ const initializePassport = () => {
     secretOrKey: SECRET_KEY_TOKEN,
   }, async (jwt_payload, done) => {
     try {
-      return done(null, jwt_payload)
-    } catch (error) {
+      const user = await userRepository.readUserByEmail(jwt_payload.user.email)
+      if (!user) {
+          return done(null, false)
+      }
+      return done(null, user)
+  } catch (error) {
       return done(error)
-    }
+  }
   }))
 
   passport.use("loginGithub", new GitHubStrategy({
@@ -26,18 +34,17 @@ const initializePassport = () => {
     callbackURL: CALLBACK_URL_GH
   }, async (accessToken, refreshToken, profile, done) => {
     try {
-      const user = await UserModel.findOne({ email: profile._json.email })
+      const user = await userRepository.readUserByEmail(profile._json.email)
       if (!user) {
-        const newCart = await newCartManager.addCart()
         const newUser = {
           first_name: profile._json.name.split(" ")[0],
           last_name: profile._json.name.split(" ")[profile._json.name.split(" ").length - 1],
-          age: 0,
           email: profile._json.email,
-          password: createHash("noPassword"),
-          cartId: newCart._id
+          age: 0,
+          password: "noPassword",
         }
-        const result = await UserModel.create(newUser);
+        console.log(newUser)
+        const result = await userRepository.createUser(newUser);
         done(null, result);
       } else {
         done(null, user);

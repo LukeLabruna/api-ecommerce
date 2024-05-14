@@ -2,7 +2,9 @@ const express = require("express")
 const router = express.Router()
 const ViewController = require("../../controllers/view.controller.js")
 const viewController = new ViewController
+const passport = require("passport")
+const checkUserRole = require("../../middleware/checkRole.js")
 
-router.get("/", viewController.realTimeProducts)
+router.get("/",checkUserRole(["admin"]), passport.authenticate("jwt", {session:false}), viewController.realTimeProducts)
 
 module.exports = router

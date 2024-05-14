@@ -1,15 +1,14 @@
 {{#if user}}
 
 <div class="userInfo">
-  <p>Welcome {{user.name}}</p>
+  <p>Welcome <span id="userName">{{user.name}}</span></p>
   <p>Email: {{user.email}}</p>
-  <p>Role: {{user.role}}</p>
   <p id="cid">{{user.cartId}}</p>
   {{#if user.age}}
   <p>Age: {{user.age}} </p>
   {{/if}}
   <a href="/user/profile"><button>Profile</button></a>
-  <a href="/user/logout"><button>Logout</button></a>
+  <a href="/api/user/logout"><button>Logout</button></a>
 </div>
 
 {{else}}

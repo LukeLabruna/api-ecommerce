@@ -1,6 +1,6 @@
 const express = require("express")
 const exphbs = require("express-handlebars")
-const io = require("./utils/sockets.js")
+const Socket = require("./socket/sockets.js")
 require("./utils/database.js")
 const mainRoutes = require("./routes/main.router.js")
 const cookieParser = require("cookie-parser");
@@ -27,14 +27,14 @@ app.engine("handlebars", exphbs.engine({
 app.set("view engine", "handlebars")
 app.set("views", "./src/views")
 
-app.use(cookieParser())
-
 app.use(passport.initialize())
 initializePassport()
+
+app.use(cookieParser())
 
 mainRoutes(app)
 
 const httpServer = app.listen(port, () => console.log(`Listening on http://localhost:${port}`))
 
-io(httpServer)
+new Socket(httpServer)
 

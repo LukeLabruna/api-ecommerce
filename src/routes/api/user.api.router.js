@@ -7,7 +7,7 @@ const userController = new UserController
 router.post("/register", userController.createUser)
 router.post("/login", userController.userValidPassword)
 router.get("/logout", userController.logout)
-router.get("/github", passport.authenticate("loginGithub", { scope: ["user:email"] }), (req, res) => {})
-router.get("/githubcallback", passport.authenticate("loginGithub", { failureRedirect: "/user/login" }), userController.githubcallback)
+router.get("/github", passport.authenticate("loginGithub", { scope: ["user:email"], session:false }), (req, res) => {})
+router.get("/githubcallback", passport.authenticate("loginGithub", { failureRedirect: "/user/login" , session:false}), userController.githubcallback)
 
 module.exports = router

@@ -1,18 +1,22 @@
-const CartService = require("../service/cartService.js")
-const cartService = new CartService
+const CartRepository = require("../repository/cartRepository.js")
+const cartRepository = new CartRepository
 const MessageModel = require("../models/message.model.js")
-const ProductService = require("../service/productService.js")
-const productService = new ProductService
+const ProductRepository = require("../repository/productRepository.js")
+const productRepository = new ProductRepository
+const UserDTO = require("../DTO/userDTO.js")
 
 class ViewController {
 
   async cartById(req, res) {
     const { cid } = req.params
+    const {first_name, last_name, age, email, cartId} = req.user
+    const userDto = new UserDTO(first_name, last_name, age, email, cartId)
     try {
-      const cartProducts = await cartService.getProductsByCartId(cid)
+      const cartProducts = await cartRepository.getProductsByCartId(cid)
       res.render("cart", {
         cartProducts: cartProducts,
-        cid
+        cid,
+        user: userDto
       })
     } catch (error) {
       console.log(error)
@@ -21,7 +25,12 @@ class ViewController {
 
   async chat(req, res) {
     const messages = await MessageModel.find()
-    res.render("chat", { messages: messages })
+    const {first_name, last_name, age, email, cartId} = req.user
+    const userDto = new UserDTO(first_name, last_name, age, email, cartId)
+    res.render("chat", {
+      messages: messages,
+      user: userDto
+    })
   }
 
   async home(req, res) {
@@ -33,9 +42,11 @@ class ViewController {
 
   async productDetail(req, res) {
     const { pid } = req.params
+    const {first_name, last_name, age, email, cartId} = req.user
+    const userDto = new UserDTO(first_name, last_name, age, email, cartId)
     try {
-      const product = await productService.getProductById(pid)
-      res.render("productDetail", { productDetail: product })
+      const product = await productRepository.getProductById(pid)
+      res.render("productDetail", { productDetail: product, user: userDto })
     } catch (error) {
       console.log(error)
     }
@@ -43,10 +54,11 @@ class ViewController {
 
   async products(req, res) {
     const { limit, query, sort, page } = req.query
-    const user = req.user
+    const {first_name, last_name, age, email, cartId} = req.user
+    const userDto = new UserDTO(first_name, last_name, age, email, cartId)
     try {
 
-      const products = await productService.getProducts(limit, query, sort, page)
+      const products = await productRepository.getProducts(limit, query, sort, page)
       const prevLink = `/products?${query ? `query=${query}&` : ""}${limit ? `limit=${limit}&` : ""}${sort ? `sort=${sort}&` : ""}page=${products.prevPage}`
       const nextLink = `/products?${query ? `query=${query}&` : ""}${limit ? `limit=${limit}&` : ""}${sort ? `sort=${sort}&` : ""}page=${products.nextPage}`
       const status = products.docs.length > 0 ? "success" : "error"
@@ -65,7 +77,7 @@ class ViewController {
         query,
         sort,
         limit,
-        user
+        user: userDto
       })
     } catch (error) {
       console.log(error)
@@ -73,8 +85,10 @@ class ViewController {
   }
 
   async realTimeProducts(req, res) {
-    const products = await productService.getProducts()
-    res.render("realTimeProducts", { products: products.docs })
+    const products = await productRepository.getProducts()
+    const {first_name, last_name, age, email, cartId} = req.user
+    const userDto = new UserDTO(first_name, last_name, age, email, cartId)
+    res.render("realTimeProducts", { products: products.docs, user: userDto })
   }
 
   async userRegister(req, res) {
@@ -92,10 +106,13 @@ class ViewController {
   }
 
   async userProfile(req, res) {
-    if (req.user) {
-      return res.render("profile", {user: req.user})
+    try {
+      const userDto = new UserDTO(req.user.first_name, req.user.last_name, req.user.age, req.user.email, req.user.cartId)
+      const isAdmin = req.user.role === 'admin'
+      res.render("profile", { user: userDto, isAdmin })
+    } catch (error) {
+      res.status(500).send('Internal Server Error')
     }
-    res.redirect("/user/login")
   }
 }
 

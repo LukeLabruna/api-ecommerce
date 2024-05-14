@@ -1,6 +1,6 @@
 const CartModel = require("../models/cart.model.js")
 
-class CartService {
+class CartRepository {
 
   async addCart() {
     try {
@@ -130,4 +130,4 @@ class CartService {
 
 }
 
-module.exports = CartService
+module.exports = CartRepository
