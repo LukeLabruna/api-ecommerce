@@ -4,6 +4,8 @@ const MessageModel = require("../models/message.model.js")
 const ProductRepository = require("../repository/productRepository.js")
 const productRepository = new ProductRepository
 const UserDTO = require("../DTO/userDTO.js")
+const TicketService = require("../service/ticketService.js")
+const ticketService = new TicketService
 
 class ViewController {
 
@@ -110,6 +112,23 @@ class ViewController {
       const userDto = new UserDTO(req.user.first_name, req.user.last_name, req.user.age, req.user.email, req.user.cartId)
       const isAdmin = req.user.role === 'admin'
       res.render("profile", { user: userDto, isAdmin })
+    } catch (error) {
+      res.status(500).send('Internal Server Error')
+    }
+  }
+
+  async checkout(req, res) {
+    const { clientName, email, numTicket } = req.query
+    try {
+      const purchaseData = {
+        clientName,
+        email,
+        numTicket: numTicket.toString()
+      }
+      const userDto = new UserDTO(req.user.first_name, req.user.last_name, req.user.age, req.user.email, req.user.cartId)
+
+      const ticket = await ticketService.getTicketById(numTicket)
+      res.render("checkout", {user: userDto, purchaseData, ticket})
     } catch (error) {
       res.status(500).send('Internal Server Error')
     }

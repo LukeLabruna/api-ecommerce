@@ -12,6 +12,18 @@ class CartRepository {
     }
   }
 
+  async getCartById(cid) {
+    try {
+      const cart = await CartModel.findById(cid)
+      if (!cart) {
+        throw new Error(`Cart with Id: ${cid} not found`)
+      }
+      return cart
+    } catch (error) {
+      throw error
+    }
+  }
+
 
   async getProductsByCartId(cid) {
     try {

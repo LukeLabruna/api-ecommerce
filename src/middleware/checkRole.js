@@ -10,7 +10,7 @@ const checkUserRole = (allowedRoles) => (req, res, next) => {
             if (err) {
                 res.status(403).json({status: "invalidToken", message: "Access denied. Invalid Token."});
             } else {
-                const userRole = decoded.user.role;
+                const userRole = decoded.user.role
                 if (allowedRoles.includes(userRole)) {
                     next()
                 } else {

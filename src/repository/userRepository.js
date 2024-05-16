@@ -61,6 +61,18 @@ class UserRepository {
       throw error
     }
   }
+
+  async getUser(query) {
+    try {
+      const user = await UserModel.findOne(query)
+      if (!user) {
+        throw new Error(`User not exist`)
+      }
+      return user
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 module.exports = UserRepository
