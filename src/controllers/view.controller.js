@@ -108,6 +108,7 @@ class ViewController {
   }
 
   async userProfile(req, res) {
+    console.log(req)
     try {
       const userDto = new UserDTO(req.user.first_name, req.user.last_name, req.user.age, req.user.email, req.user.cartId)
       const isAdmin = req.user.role === 'admin'
