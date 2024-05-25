@@ -3,19 +3,13 @@ const productRepository = new ProductRepository
 
 class ProductController {
 
-  async addProduct(req, res) {
+  async addProduct(req, res, next) {
     const newProduct = req.body
     try {
       await productRepository.addProduct(newProduct)
       res.send({ status: "success", message: "Correctly aggregated product" })
     } catch (error) {
-      if (error.message === "Product already exists") {
-        res.status(409).json({ error: `${error.message}` })
-      } else if (error.message === "Product missing fields") {
-        res.status(409).json({ error: `${error.message}` })
-      } else {
-        res.status(500).json({ status: "error", message: "Internal Server Error" })
-      }
+      next(error)
     }
   }
 
@@ -29,34 +23,34 @@ class ProductController {
     }
   }
 
-  async getProductById(req, res) {
+  async getProductById(req, res, next) {
     let pid = req.params.pid
     try {
       const product = await productRepository.getProductById(pid)
       res.send(product)
     } catch (error) {
-      res.status(404).json({ error: `${error.message}` })
+      next(error)
     }
   }
 
-  async updateProduct(req, res) {
+  async updateProduct(req, res, next) {
     const pid = req.params.pid
     const updatedProduct = req.body
     try {
       await productRepository.updateProduct(pid, updatedProduct)
       res.send({ status: "success", message: "Correctly updated product" })
     } catch (error) {
-      res.status(409).json({ error: `${error.message}` })
+      next(error)
     }
   }
 
-  async deleteProduct(req, res) {
+  async deleteProduct(req, res, next) {
     const pid = req.params.pid
     try {
       await productRepository.deleteProduct(pid)
       res.send({ status: "success", message: `Product with id: ${pid} correctly deleted` })
     } catch (error) {
-      res.status(409).json({ error: `${error.message}` })
+      next(error)
     }
   }
 

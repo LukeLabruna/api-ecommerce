@@ -11,8 +11,10 @@ const productsApiRouter = require("./api/products.api.router.js")
 const cartsApiRouter = require("./api/carts.api.router.js")
 const userApiRouter = require("./api/user.api.router.js")
 const sessionApiRouter = require("./api/session.api.router.js")
+const mockingproductsApiRouter = require("./api/mockingproducts.router.js")
 
 const authMiddleware = require("../middleware/authMiddleware.js")
+const handleErrors = require("../middleware/handleErrors.js")
 
 const routes = (app) => {
   app.use(authMiddleware)
@@ -20,6 +22,7 @@ const routes = (app) => {
   app.use("/api/carts", cartsApiRouter)
   app.use("/api/user", userApiRouter)
   app.use("/api/session", sessionApiRouter)
+  app.use("/api/mockingproducts", mockingproductsApiRouter)
   app.use("/", homeViewsRouter)
   app.use("/products", productsViewsRouter)
   app.use("/realTimeProducts", realTimeProductsViewsRouter)
@@ -28,6 +31,7 @@ const routes = (app) => {
   app.use("/product", productViewsRouter)
   app.use("/user", userViewsRouter)
   app.use("/checkout", checkoutViewsRouter)
+  app.use(handleErrors)
 }
 
 module.exports = routes

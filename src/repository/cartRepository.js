@@ -1,4 +1,11 @@
 const CartModel = require("../models/cart.model.js")
+const CustomError = require("../service/errors/customError.js")
+const Errors = require("../service/errors/enumErrors.js")
+const {
+  generateNotFoundProductErrorInfo,
+  generateInvalidId,
+  generateNotFoundCartErrorInfo
+} = require("../service/errors/infoErrors.js")
 
 class CartRepository {
 
@@ -16,7 +23,12 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw new Error(`Cart with Id: ${cid} not found`)
+        throw CustomError.createError({
+          name: "Invalid cart ID",
+          cause: generateNotFoundCartErrorInfo(),
+          message: "Error when trying to found a cart",
+          code: Errors.INVALID_ID,
+        })
       }
       return cart
     } catch (error) {
@@ -29,7 +41,12 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw new Error(`Cart with Id: ${cid} not found`)
+        throw CustomError.createError({
+          name: "Invalid cart ID",
+          cause: generateInvalidId(cid),
+          message: "Error when trying to read a cart",
+          code: Errors.INVALID_ID,
+        })
       }
       return cart.products
     } catch (error) {
@@ -41,7 +58,12 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw new Error(`Cart with Id: ${cid} not found`);
+        throw CustomError.createError({
+          name: "Invalid cart ID",
+          cause: generateInvalidIdCartErrorInfo(cid),
+          message: "Error when trying to read a cart",
+          code: Errors.INVALID_ID,
+        })
       }
       const productExists = cart.products.find(p => p.product._id.toString() === pid)
       if (productExists) {
@@ -64,11 +86,21 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw new Error(`Cart with Id: ${cid} not found`)
+        throw CustomError.createError({
+          name: "Invalid cart ID",
+          cause: generateInvalidId(cid),
+          message: "Error when trying to read a cart",
+          code: Errors.INVALID_ID,
+        })
       }
       const productIndex = cart.products.findIndex(p => p.product._id.toString() === pid)
       if (productIndex === -1) {
-        throw new Error(`Product with id ${pid} not found`)
+        throw CustomError.createError({
+          name: "Not found Product",
+          cause: generateNotFoundProductErrorInfo(),
+          message: `Product with id ${pid} not found`,
+          code: Errors.NOT_FOUND,
+        })
       } else {
         cart.products.splice(productIndex, 1)
       }
@@ -83,7 +115,12 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw new Error(`Cart with Id: ${cid} not found`)
+        throw CustomError.createError({
+          name: "Invalid cart ID",
+          cause: generateInvalidId(cid),
+          message: "Error when trying to read a cart",
+          code: Errors.INVALID_ID,
+        })
       }
       if (cart.products.length === 0) {
         throw new Error(`Cart with Id: ${cid} is alredy empty`)
@@ -100,7 +137,12 @@ class CartRepository {
     try {
       const cartDelete = await CartModel.findByIdAndDelete(cid)
       if (!cartDelete) {
-        throw new Error(`Cart with Id: ${cid} not found`)
+        throw CustomError.createError({
+          name: "Invalid cart ID",
+          cause: generateInvalidId(cid),
+          message: "Error when trying to delete a cart",
+          code: Errors.INVALID_ID,
+        })
       }
     } catch (error) {
       throw error
@@ -111,7 +153,12 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw new Error(`Cart with Id: ${cid} not found`)
+        throw CustomError.createError({
+          name: "Invalid cart ID",
+          cause: generateInvalidId(cid),
+          message: "Error when trying to read a cart",
+          code: Errors.INVALID_ID,
+        })
       }
       const productIndex = cart.products.findIndex(item => item.product._id.toString() === pid)
       if (productIndex !== -1) {
@@ -130,7 +177,12 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw new Error(`Cart with Id: ${cid} not found`)
+        throw CustomError.createError({
+          name: "Invalid cart ID",
+          cause: generateInvalidId(cid),
+          message: "Error when trying to read a cart",
+          code: Errors.INVALID_ID,
+        })
       }
       cart.products = updatedProducts
       cart.markModified('products')
