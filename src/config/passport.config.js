@@ -43,7 +43,6 @@ const initializePassport = () => {
           age: 0,
           password: "noPassword",
         }
-        console.log(newUser)
         const result = await userRepository.createUser(newUser);
         done(null, result);
       } else {

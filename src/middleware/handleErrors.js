@@ -1,7 +1,7 @@
 const Errors = require("../service/errors/enumErrors")
 
 const handleError = (err, req, res, next) => {
-  console.log(err.cause);
+  req.logger.error(err.cause)
 
   const errorHandlers = {
     [Errors.ALL_FIELD_REQUIRED]: (res, err) => res.status(400).json({ status: "error", error: err.name }),

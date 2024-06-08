@@ -15,7 +15,9 @@ const configObj = {
   CLIENT_ID_GH: process.env.CLIENT_ID_GH,
   CLIENT_SECRET_GH: process.env.CLIENT_SECRET_GH,
   CALLBAK_URL_GH: process.env.CALLBAK_URL_GH,
-  SECRET_KEY_TOKEN: process.env.SECRET_KEY_TOKEN
+  SECRET_KEY_TOKEN: process.env.SECRET_KEY_TOKEN,
+  ENVIRONMENT: process.env.ENVIRONMENT,
+  LOG_LEVEL: process.env.LOG_LEVEL
 }
 
 module.exports = configObj
