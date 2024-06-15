@@ -11,7 +11,7 @@ class ViewController {
 
   async cartById(req, res) {
     const { cid } = req.params
-    const {first_name, last_name, age, email, cartId} = req.user
+    const { first_name, last_name, age, email, cartId } = req.user
     const userDto = new UserDTO(first_name, last_name, age, email, cartId)
     try {
       const cartProducts = await cartRepository.getProductsByCartId(cid)
@@ -28,7 +28,7 @@ class ViewController {
 
   async chat(req, res) {
     const messages = await MessageModel.find()
-    const {first_name, last_name, age, email, cartId} = req.user
+    const { first_name, last_name, age, email, cartId } = req.user
     const userDto = new UserDTO(first_name, last_name, age, email, cartId)
     req.logger.info("Rendering Chat page")
     res.render("chat", {
@@ -46,7 +46,7 @@ class ViewController {
 
   async productDetail(req, res) {
     const { pid } = req.params
-    const {first_name, last_name, age, email, cartId} = req.user
+    const { first_name, last_name, age, email, cartId } = req.user
     const userDto = new UserDTO(first_name, last_name, age, email, cartId)
     try {
       const product = await productRepository.getProductById(pid)
@@ -59,7 +59,7 @@ class ViewController {
 
   async products(req, res) {
     const { limit, query, sort, page } = req.query
-    const {first_name, last_name, age, email, cartId} = req.user
+    const { first_name, last_name, age, email, cartId } = req.user
     const userDto = new UserDTO(first_name, last_name, age, email, cartId)
     try {
 
@@ -92,7 +92,7 @@ class ViewController {
 
   async realTimeProducts(req, res) {
     const products = await productRepository.getProducts()
-    const {first_name, last_name, age, email, cartId} = req.user
+    const { first_name, last_name, age, email, cartId } = req.user
     const userDto = new UserDTO(first_name, last_name, age, email, cartId)
     req.logger.info("Rendering Real Time Products page")
     res.render("realTimeProducts", { products: products.docs, user: userDto })
@@ -140,12 +140,32 @@ class ViewController {
 
       const ticket = await ticketService.getTicketById(numTicket)
       req.logger.info("Rendering Checkout page")
-      res.render("checkout", {user: userDto, purchaseData, ticket})
+      res.render("checkout", { user: userDto, purchaseData, ticket })
     } catch (error) {
       req.logger.error(error)
       res.status(500).send('Internal Server Error')
     }
   }
+
+  async requestPasswordReset(req, res) {
+    const userDto = req.user ? new UserDTO(req.user.first_name, req.user.last_name, req.user.age, req.user.email, req.user.cartId) : ""
+    req.logger.info("Rendering Password Reset page")
+
+    res.render("requestpasswordreset", { user: userDto })
+  }
+
+  async confirmationSend(req, res) {
+    const userDto = req.user ? new UserDTO(req.user.first_name, req.user.last_name, req.user.age, req.user.email, req.user.cartId) : ""
+    req.logger.info("Rendering ConfirmationSend page")
+    res.render("confirmationsend", { user: userDto })
+  }
+
+  async resetPassword(req, res) {
+    const userDto = req.user ? new UserDTO(req.user.first_name, req.user.last_name, req.user.age, req.user.email, req.user.cartId) : ""
+    req.logger.info("Rendering Reset Password page")
+    res.render("resetpassword", { user: userDto })
+  }
+
 }
 
 module.exports = ViewController
