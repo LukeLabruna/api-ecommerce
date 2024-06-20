@@ -21,7 +21,8 @@ class UserRepository {
         email: user.email,
         password: createHash(user.password),
         age: user.age,
-        cartId: newCart._id
+        cartId: newCart._id,
+        role: user.role
       })
 
       newUser.save()
