@@ -4,9 +4,23 @@
 
 <div class="userProfile">
   <h2>Welcome {{user.name}}</h2>
-  <p>Email: {{user.email}}</p>
-  {{#if user.age}}
-  <p>Age: {{user.age}}</p>
+  {{#if isAdmin}}
+    <a href="/realtimeproducts"><button>Modify Products</button></a>
+    {{else}}
+      <a href="/chat"><button>Live Chat</button></a>
+      <a href="/products"><button>Store</button></a>
+      {{#if isPremium}}
+        <a href="/realtimeproducts"><button>Premium Panel</button></a>
+        <form action="/api/user/premium/{{user.id}}" method="POST">
+          <button>Change to Regular User</button>
+        </form>
+      {{/if}}
   {{/if}}
+  {{#if isRegular}}
+    <form action="/api/user/premium/{{user.id}}" method="POST">
+      <button>Change to Premium User</button>
+    </form>
+  {{/if}}
+  <a href="/user/requestpasswordreset"><button>Reset password</button></a>
   <a href="/api/user/logout"><button>Logout</button></a>
 </div>

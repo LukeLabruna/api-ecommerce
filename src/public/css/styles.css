@@ -242,7 +242,7 @@ h1 {
   margin: 0.3rem;
 }
 
-.loginForm, .registerForm, .userProfile, .failed {
+.loginForm, .registerForm, .userProfile, .failed, .formRequestPasswordReset, .formResetPassword {
   display: flex;
   flex-direction: column;
   width: 25%;
@@ -293,6 +293,9 @@ h1 {
 .checkout {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  
+  align-items: center; 
+}
+
+.userProfile button {
+  width: 100%;
 }

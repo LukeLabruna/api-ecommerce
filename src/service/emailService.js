@@ -15,7 +15,7 @@ class EmailService {
     async sendEmailPurchase(email, first_name, ticket) {
         try {
             const mailOptions = {
-                from: "Coder Test <lucaspablolabruna@gmail.com>",
+                from: "E-commerce <lucaspablolabruna@gmail.com>",
                 to: email,
                 subject: 'Confirmación de compra',
                 html: `
@@ -34,7 +34,7 @@ class EmailService {
     async sendMailResetPassword(email, first_name, token) {
         try {
             const mailOptions = {
-                from: 'lucaspablolabruna@gmail.com',
+                from: 'E-commerce <lucaspablolabruna@gmail.com>',
                 to: email,
                 subject: 'Restablecimiento de Contraseña',
                 html: `

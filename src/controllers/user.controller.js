@@ -125,6 +125,27 @@ class UserController {
     }
   }
 
+  async changeRole(req, res) {
+    try {
+      const { uid } = req.params
+
+      const user = await userRepository.getUser({_id: uid})
+
+      if (!user) {
+          return res.status(404).json({ message: "User not found" })
+      }
+
+      const newRole = user.role === "user" ? "premium" : "user"
+
+      await userRepository.changeRole(uid, newRole)
+    
+      res.redirect("/user/profile")
+  } catch (error) {
+      console.error(error)
+      res.status(500).json({ message: "Internal server error" })
+  }
+  }
+
 }
 
 module.exports = UserController

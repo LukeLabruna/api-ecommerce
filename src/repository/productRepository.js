@@ -11,7 +11,7 @@ const {
 class ProductRepository {
 
   async addProduct(product) {
-    const {title, description, price, thumbnail, code, stock, category, status} = product
+    const {title, description, price, thumbnail, code, stock, category, status, owner} = product
     try {
       const productCodeExists = await ProductModel.findOne({code: code})
       if (productCodeExists) {
@@ -38,7 +38,9 @@ class ProductRepository {
         code,
         stock,
         category,
-        status: status === false ? false : true
+        status: status === false ? false : true,
+        owner
+
       })
       
       await newProduct.save()

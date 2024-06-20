@@ -11,5 +11,6 @@ router.get("/github", passport.authenticate("loginGithub", { scope: ["user:email
 router.get("/githubcallback", passport.authenticate("loginGithub", { failureRedirect: "/user/login" , session:false}), userController.githubcallback)
 router.post("/requestPasswordReset", userController.requestPasswordReset)
 router.post('/resetpassword', userController.resetPassword)
+router.post("/premium/:uid", userController.changeRole)
 
 module.exports = router

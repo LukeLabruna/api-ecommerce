@@ -2,11 +2,12 @@
 
 <div class="userInfo">
   <p>Welcome <span id="userName">{{user.name}}</span></p>
-  <p>Email: {{user.email}}</p>
+  <p >Email: <span id="email">{{user.email}}</span></p>
   <p id="cid">{{user.cartId}}</p>
   {{#if user.age}}
   <p>Age: {{user.age}} </p>
   {{/if}}
+  <p id="role" style="display: none;">{{user.role}}</p>
   <a href="/user/profile"><button>Profile</button></a>
   <a href="/api/user/logout"><button>Logout</button></a>
 </div>

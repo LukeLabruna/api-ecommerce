@@ -1,5 +1,6 @@
 const socket = require("socket.io")
-const MessageModel = require("../models/message.model.js");
+const MessageModel = require("../models/message.model.js")
+const ProductModel = require("../models/product.model.js")
 const ProductRepository = require("../repository/productRepository.js")
 const productRepository = new ProductRepository
 
@@ -11,15 +12,18 @@ class Socket {
 
   async initSocketEvents() {
 
-    this.io.on("connection", (socket) => {
+    this.io.on("connection", async (socket) => {
 
       console.log("Connected client")
+
+      const products = await ProductModel.find()
+      socket.emit("products", products)
 
       socket.on("newProduct", async (data) => {
         try {
           await productRepository.addProduct(data)
           socket.emit("success", { message: "Correctly aggregated product" })
-          const products = await productRepository.getProducts()
+          const products = await ProductModel.find()
           socket.emit("products", products)
         } catch (error) {
           socket.emit("error", error.message)
@@ -30,7 +34,7 @@ class Socket {
         try {
           await productRepository.deleteProduct(data)
           socket.emit("success", { message: `Product with id: ${data} correctly deleted` })
-          const products = await productRepository.getProducts()
+          const products = await ProductModel.find()
           socket.emit("products", products)
         } catch (error) {
           socket.emit("error", error.message)
@@ -54,13 +58,6 @@ class Socket {
   }
 
 }
-
-
-
-
-
-
-
 
 module.exports = Socket
 

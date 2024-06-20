@@ -7,6 +7,8 @@ const userRepository = new UserRepository
 const { generateUniqueCode, calculateTotal } = require("../utils/cartUtils.js")
 const TicketService = require("../service/ticketService.js")
 const ticketService = new TicketService
+const EmailService = require("../service/emailService.js")
+const emailService = new EmailService
 
 class CartController {
 
@@ -22,13 +24,14 @@ class CartController {
 
   async addProduct(req, res, next) {
     const { cid, pid } = req.params
+    const user = await userRepository.getUser({cartId: cid})
+    const product = await productRepository.getProductById(pid)
     try {
-      const existingProduct = await productRepository.getProductById(pid);
-      if (existingProduct.status === "error") {
-        return res.status(404).json({ status: "error", message: `${existingProduct.message}` });
+      if (user.email === product.owner) {
+        return res.json({status: "error", message: "You are the owner of this product. You cannot add it to the cart."})
       }
       await cartRepository.addProduct(cid, pid)
-      res.json({ status: "success", message: "Correctly aggregated to cart" })
+      res.json({ status: "success", message: "Successfully added to the cart." })
     } catch (error) {
       next(error)
     }
@@ -77,7 +80,7 @@ class CartController {
   }
 
   async purchase(req, res, next) {
-    const cid = req.params.cid;
+    const cid = req.params.cid
     try {
 
       const cart = await cartRepository.getCartById(cid)
@@ -111,6 +114,7 @@ class CartController {
 
       cart.products = notAvailable
       await cart.save()
+      await emailService.sendEmailPurchase(userWithCart.email, userWithCart.first_name,  newTicket._id)
 
       const purchaseData = {
         clientName: `${userWithCart.first_name} ${userWithCart.last_name}`,
