@@ -6,7 +6,9 @@
     "cart-test": "mocha test/cart.test.js --mode test",
     "products-test": "mocha test/products.test.js --mode test",
     "user-test": "mocha test/user.test.js --mode test",
+    "supertest-test": "mocha test/supertest.test.js --mode test",
     "dev": "nodemon src/app.js --mode development",
+    "test": "nodemon src/app.js --mode test",
     "start": "node src/app.js --mode production"
   },
   "keywords": [],
