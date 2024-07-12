@@ -44,6 +44,7 @@ class ProductRepository {
       })
       
       await newProduct.save()
+      return newProduct
     } catch (error) {
       throw error
     }

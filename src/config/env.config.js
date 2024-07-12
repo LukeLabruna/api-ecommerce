@@ -4,7 +4,7 @@ const program = require("../utils/commander.js")
 const { mode } = program.opts()
 
 dotenv.config({
-  path: mode === "development" ? "./.env.development" : "./.env.production"
+  path: mode === "development" ? "./.env.development" : mode === "test" ? "./.env.test" : "./.env.production"
 })
 
 const configObj = {
