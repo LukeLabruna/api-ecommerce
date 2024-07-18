@@ -35,6 +35,9 @@ class UserController {
 
       const token = jwt.sign({ user }, SECRET_KEY_TOKEN, { expiresIn: "24h" })
 
+      user.last_connection = new Date()
+      await user.save()
+
       res.cookie("userToken", token, {
         maxAge: 24 * 3600 * 1000,
         httpOnly: true,
@@ -47,6 +50,16 @@ class UserController {
   }
 
   async logout(req, res) {
+    if (req.user) {
+      try {
+        req.user.last_connection = new Date()
+        await req.user.save()
+      } catch (error) {
+        console.error(error)
+        res.status(500).send("Internal server error")
+        return
+      }
+    }
     res.clearCookie("userToken")
     res.redirect("/")
   }
@@ -92,13 +105,13 @@ class UserController {
     const { email, password, token } = req.body
 
     try {
-      
+
       const user = await userRepository.readUserByEmail(email)
       if (!user) {
         return res.status(404).send("User not found")
       }
 
-      
+
       const resetToken = user.resetToken
       if (!resetToken || resetToken.token !== token) {
         return res.render("resetpassword", { user: "", error: "Invalid token reset" });
@@ -113,7 +126,7 @@ class UserController {
         return res.render("resetpassword", { user: "", error: "The new password cannot be the same as the current password" });
       }
 
-      
+
       user.password = createHash(password)
       user.resetToken = undefined
       await user.save()
@@ -121,29 +134,88 @@ class UserController {
       return res.redirect("/user/login");
     } catch (error) {
       console.error(error);
-      return res.status(500).render("passwordreset", { error: "Error interno del servidor" });
+      return res.status(500).render("passwordreset", { error: "Internal server error" });
     }
   }
 
   async changeRole(req, res) {
+
+
+
+
     try {
       const { uid } = req.params
 
-      const user = await userRepository.getUser({_id: uid})
+      const user = await userRepository.getUser({ _id: uid })
 
       if (!user) {
-          return res.status(404).json({ message: "User not found" })
+        return res.status(404).json({ message: "User not found" })
+      }
+
+      const requiredDocuments = ["Identificacion", "Comprobante de domicilio", "Comprobante de estado de cuenta"]
+
+      const userDocuments = user.documents.map(doc => doc.name)
+
+      const hasDocuments = requiredDocuments.every(doc => userDocuments.includes(doc))
+
+      if (user.role === "user" && !hasDocuments) {
+        return res.status(400).send("You must complete all documentation to become premium.")
       }
 
       const newRole = user.role === "user" ? "premium" : "user"
 
       await userRepository.changeRole(uid, newRole)
-    
+
       res.redirect("/user/profile")
-  } catch (error) {
+    } catch (error) {
       console.error(error)
       res.status(500).json({ message: "Internal server error" })
+    }
   }
+
+  async uploadDocuments(req, res) {
+
+    const { uid } = req.params
+    const uploadedDocuments = req.files
+
+    try {
+      const user = await userRepository.getUser({ _id: uid })
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" })
+      }
+
+      if (uploadedDocuments) {
+        if (uploadedDocuments.document) {
+          user.documents = user.documents.concat(uploadedDocuments.document.map(doc => ({
+            name: doc.originalname,
+            reference: doc.path
+          })))
+        }
+
+        if (uploadedDocuments.products) {
+          user.documents = user.documents.concat(uploadedDocuments.products.map(doc => ({
+            name: doc.originalname,
+            reference: doc.path
+          })))
+        }
+
+        if (uploadedDocuments.profile) {
+          user.documents = user.documents.concat(uploadedDocuments.profile.map(doc => ({
+            name: doc.originalname,
+            reference: doc.path
+          })))
+        }
+      }
+
+      await user.save()
+
+      res.status(200).send("Documents uploaded successfully")
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Internal server error" })
+    }
+
   }
 
 }

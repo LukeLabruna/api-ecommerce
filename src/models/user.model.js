@@ -33,7 +33,15 @@ const userSchema = new mongoose.Schema({
   resetToken: {
     token: String,
     expiresAt: Date
-}
+  },
+  documents: [{
+    name: String,
+    reference: String
+  }],
+  last_connection: {
+    type: Date,
+    default: Date.now
+  }
 })
 
 const UserModel = mongoose.model("users", userSchema)
