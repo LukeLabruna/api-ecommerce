@@ -11,8 +11,8 @@ class ViewController {
 
   async cartById(req, res) {
     const { cid } = req.params
-    const { first_name, last_name, age, email, cartId, role } = req.user
-    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role)
+    const { first_name, last_name, age, email, cartId, role, _id } = req.user
+    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role, _id)
     try {
       const cartProducts = await cartRepository.getProductsByCartId(cid)
       req.logger.info("Rendering Cart page")
@@ -28,8 +28,8 @@ class ViewController {
 
   async chat(req, res) {
     const messages = await MessageModel.find()
-    const { first_name, last_name, age, email, cartId, role } = req.user
-    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role)
+    const { first_name, last_name, age, email, cartId, role, _id } = req.user
+    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role, _id)
     req.logger.info("Rendering Chat page")
     res.render("chat", {
       messages: messages,
@@ -41,15 +41,15 @@ class ViewController {
     if (!req?.cookies["userToken"]) {
       return res.redirect("/user/login")
     }
-    const { first_name, last_name, age, email, cartId, role } = req.user
-    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role)
+    const { first_name, last_name, age, email, cartId, role, _id } = req.user
+    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role, _id)
     res.render("home", {user: userDto})
   }
 
   async productDetail(req, res) {
     const { pid } = req.params
-    const { first_name, last_name, age, email, cartId, role } = req.user
-    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role)
+    const { first_name, last_name, age, email, cartId, role, _id } = req.user
+    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role, _id)
     try {
       const product = await productRepository.getProductById(pid)
       req.logger.info("Rendering Product Detail page")
@@ -61,8 +61,8 @@ class ViewController {
 
   async products(req, res) {
     const { limit, query, sort, page } = req.query
-    const { first_name, last_name, age, email, cartId, role } = req.user
-    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role)
+    const { first_name, last_name, age, email, cartId, role, _id } = req.user
+    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role, _id)
     try {
 
       const products = await productRepository.getProducts(limit, query, sort, page)
@@ -93,9 +93,9 @@ class ViewController {
   }
 
   async realTimeProducts(req, res) {
-    const { first_name, last_name, age, email, cartId, role } = req.user
+    const { first_name, last_name, age, email, cartId, role, _id } = req.user
     // const isPremium = role === "premium"
-    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role)
+    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role, _id)
     req.logger.info("Rendering Real Time Products page")
     res.render("realTimeProducts", {user: userDto})
   }
@@ -170,6 +170,10 @@ class ViewController {
     res.render("resetpassword", { user: userDto })
   }
 
+  async updateDocuments(req, res) {
+    const userDto = new UserDTO(req.user.first_name, req.user.last_name, req.user.age, req.user.email, req.user.cartId, req.user.role, req.user._id)
+    res.render("updateDocuments", { user: userDto})
+  }
 }
 
 module.exports = ViewController

@@ -140,9 +140,6 @@ class UserController {
 
   async changeRole(req, res) {
 
-
-
-
     try {
       const { uid } = req.params
 
@@ -152,7 +149,7 @@ class UserController {
         return res.status(404).json({ message: "User not found" })
       }
 
-      const requiredDocuments = ["identificacion", "comprobanteDeDomicilio", "comprobanteDeEstadoDeCuenta"]
+      const requiredDocuments = ["identification", "proofOfAddress", "proofOfAccount"]
 
       const userDocuments = user.documents.map(doc => doc.name)
 
@@ -182,15 +179,18 @@ class UserController {
       const user = await userRepository.getUser({ _id: uid })
 
       if (!user) {
-        return res.status(404).json({ message: "User not found" })
+        return res.status(404).json({status: "error", message: "User not found" })
       }
 
       if (uploadedDocuments) {
         if (uploadedDocuments.document) {
-          user.documents = user.documents.concat(uploadedDocuments.document.map(doc => ({
-            name: doc.originalname,
-            reference: doc.path
-          })))
+          user.documents = user.documents.concat(uploadedDocuments.document.map(doc => {
+            const fileNameWithoutExt = doc.originalname.split('.').slice(0, -1).join('.')
+            return {
+              name: fileNameWithoutExt,
+              reference: doc.path
+            }
+          }))
         }
 
         if (uploadedDocuments.products) {
@@ -210,10 +210,10 @@ class UserController {
 
       await user.save()
 
-      res.status(200).send("Documents uploaded successfully")
+      res.status(200).json({status: "success", message: "Documents uploaded successfully"})
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "Internal server error" })
+      res.status(500).json({status:"error", message: "Internal server error" })
     }
 
   }

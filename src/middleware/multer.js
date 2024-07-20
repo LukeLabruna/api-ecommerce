@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
     const fileName = `${file.originalname.split('.').slice(0, -1).join('.')}-${Date.now()}.${fileExt}`
     cb(null, fileName);
   }
-});
+})
 
 const upload = multer({ storage: storage });
 

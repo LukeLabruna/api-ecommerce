@@ -242,7 +242,7 @@ h1 {
   margin: 0.3rem;
 }
 
-.loginForm, .registerForm, .userProfile, .failed, .formRequestPasswordReset, .formResetPassword {
+.loginForm, .registerForm, .userProfile, .failed, .formRequestPasswordReset, .formResetPassword, .updateDocuments {
   display: flex;
   flex-direction: column;
   width: 25%;
