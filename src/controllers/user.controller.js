@@ -152,7 +152,7 @@ class UserController {
         return res.status(404).json({ message: "User not found" })
       }
 
-      const requiredDocuments = ["Identificacion", "Comprobante de domicilio", "Comprobante de estado de cuenta"]
+      const requiredDocuments = ["identificacion", "comprobanteDeDomicilio", "comprobanteDeEstadoDeCuenta"]
 
       const userDocuments = user.documents.map(doc => doc.name)
 
