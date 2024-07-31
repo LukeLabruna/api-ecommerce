@@ -1,3 +1,57 @@
+document.getElementById("identification").addEventListener("change", function() {
+  previewFile(this, "previewIdentification")
+})
+
+document.getElementById("proofOfAddress").addEventListener("change", function() {
+  previewFile(this, "previewProofOfAddress")
+})
+
+document.getElementById("proofOfAccount").addEventListener("change", function() {
+  previewFile(this, "previewProofOfAccount")
+})
+
+const previewFile = (input, previewId) => {
+  const previewContainer = document.getElementById("previewContainer")
+  const previewDiv = document.getElementById(previewId)
+  const staticContent = previewDiv.querySelector("p")?.outerHTML || ""
+  previewDiv.innerHTML = staticContent
+  if (input.files) {
+    previewContainer.className = "preview"
+    Array.from(input.files).forEach(file => {
+      previewDiv.className = "displayBlock"
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const fileExt = file.name.split(".").pop().toLowerCase()
+        let preview
+        if (fileExt === "pdf") {
+          preview = document.createElement("embed")
+          preview.type = "application/pdf"
+          preview.src = e.target.result
+        } else if (["jpg", "jpeg", "png", "gif"].includes(fileExt)) {
+          preview = document.createElement("img")
+          preview.src = e.target.result
+        } else {
+          Swal.fire({
+            title: "Oops...",
+            text: `Archivo no permitido`,
+            icon: "error",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000
+          })
+          return
+        }
+        if (preview) {
+          previewDiv.appendChild(preview)
+        }
+      }
+      reader.readAsDataURL(file)
+      
+    })
+  }
+}
+
 const changeFileName = (e) => {
   e.preventDefault()
   const identification = document.getElementById("identification")
@@ -6,7 +60,7 @@ const changeFileName = (e) => {
 
   const renameFile = (file, newName) => {
     if (!file) return null
-    const fileExt = file.name.split('.').pop()
+    const fileExt = file.name.split(".").pop()
     const newFileName = `${newName}.${fileExt}`
     return new File([file], newFileName, { type: file.type })
   }

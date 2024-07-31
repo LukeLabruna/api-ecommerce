@@ -86,18 +86,18 @@ class CartController {
       const cart = await cartRepository.getCartById(cid)
       const products = cart.products
 
-      const notAvailable = [];
+      const notAvailable = []
 
       for (const item of products) {
         const productId = item.product
         const product = await productRepository.getProductById(productId)
 
         if (product.stock >= item.quantity) {
-          product.stock -= item.quantity;
+          product.stock -= item.quantity
           await product.save()
         } else {
-          notAvailable.push({ product: productId, quantity: item.quantity - product.stock });
-          product.stock = 0;
+          notAvailable.push({ product: productId, quantity: item.quantity - product.stock })
+          product.stock = 0
           await product.save()
         }
       }

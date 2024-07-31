@@ -4,7 +4,7 @@ const jwt = require("passport-jwt")
 const UserRepository = require("../repository/userRepository.js")
 const CartRepository = require("../repository/cartRepository.js")
 const configObj = require("./env.config")
-const { createHash } = require('../utils/hashBcrypt.js')
+const { createHash } = require("../utils/hashBcrypt.js")
 const userRepository = new UserRepository
 const cartRepository = new CartRepository
 const { SECRET_KEY_TOKEN, CLIENT_ID_GH, CLIENT_SECRET_GH, CALLBACK_URL_GH } = configObj
@@ -43,13 +43,13 @@ const initializePassport = () => {
           age: 0,
           password: "noPassword",
         }
-        const result = await userRepository.createUser(newUser);
-        done(null, result);
+        const result = await userRepository.createUser(newUser)
+        done(null, result)
       } else {
-        done(null, user);
+        done(null, user)
       }
     } catch (error) {
-      return done(error);
+      return done(error)
     }
   }))
 
@@ -65,11 +65,11 @@ const initializePassport = () => {
 
 
 const cookieExtractor = (req) => {
-  let token = null;
+  let token = null
   if (req && req.cookies) {
     token = req.cookies["userToken"]
   }
-  return token;
+  return token
 }
 
 module.exports = initializePassport

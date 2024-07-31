@@ -1,5 +1,5 @@
 const cid = document.getElementById("cid").innerHTML
-const cards = document.querySelectorAll('.card')
+const cards = document.querySelectorAll(".card")
 
 cards.forEach(card => {
   const _id = card.id

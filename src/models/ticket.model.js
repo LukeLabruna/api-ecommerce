@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose")
 
 const productsSchema = new mongoose.Schema({
     product: {
@@ -30,16 +30,16 @@ const ticketSchema = new mongoose.Schema({
     },
     purchaser: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: "User",
         required: true
     }
 })
 
-ticketSchema.pre('findOne', function (next) {
-    this.populate('products.product', '_id title price thumbnail')
+ticketSchema.pre("findOne", function (next) {
+    this.populate("products.product", "_id title price thumbnail")
     next()
   })
 
-const TicketModel = mongoose.model('Ticket', ticketSchema)
+const TicketModel = mongoose.model("Ticket", ticketSchema)
 
 module.exports = TicketModel

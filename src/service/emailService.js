@@ -1,9 +1,9 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer")
 
 class EmailService {
     constructor() {
         this.transporter = nodemailer.createTransport({
-            service: 'gmail',
+            service: "gmail",
             port: 587,
             auth: {
                 user: "lucaspablolabruna@gmail.com",
@@ -17,7 +17,7 @@ class EmailService {
             const mailOptions = {
                 from: "E-commerce <lucaspablolabruna@gmail.com>",
                 to: email,
-                subject: 'Confirmación de compra',
+                subject: "Confirmación de compra",
                 html: `
                     <h1>Confirmación de compra</h1>
                     <p>Gracias por tu compra, ${first_name}!</p>
@@ -25,18 +25,18 @@ class EmailService {
                 `
             }
 
-            await this.transporter.sendMail(mailOptions);
+            await this.transporter.sendMail(mailOptions)
         } catch (error) {
-            console.error('Error sending email:', error)
+            console.error("Error sending email:", error)
         }
     }
 
     async sendMailResetPassword(email, first_name, token) {
         try {
             const mailOptions = {
-                from: 'E-commerce <lucaspablolabruna@gmail.com>',
+                from: "E-commerce <lucaspablolabruna@gmail.com>",
                 to: email,
-                subject: 'Restablecimiento de Contraseña',
+                subject: "Restablecimiento de Contraseña",
                 html: `
                     <h1>Restablecimiento de Contraseña</h1>
                     <p>Hola ${first_name},</p>
@@ -48,7 +48,7 @@ class EmailService {
                 `
             }
 
-            await this.transporter.sendMail(mailOptions);
+            await this.transporter.sendMail(mailOptions)
         } catch (error) {
             console.error("Error sending email:", error)
             throw new Error("Error sending email")

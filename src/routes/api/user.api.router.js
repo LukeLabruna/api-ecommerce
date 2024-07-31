@@ -11,7 +11,7 @@ router.get("/logout", userController.logout)
 router.get("/github", passport.authenticate("loginGithub", { scope: ["user:email"], session:false }), (req, res) => {})
 router.get("/githubcallback", passport.authenticate("loginGithub", { failureRedirect: "/user/login" , session:false}), userController.githubcallback)
 router.post("/requestPasswordReset", userController.requestPasswordReset)
-router.post('/resetpassword', userController.resetPassword)
+router.post("/resetpassword", userController.resetPassword)
 router.post("/premium/:uid", userController.changeRole)
 router.post("/premium/:uid/documents", upload.fields([{ name: "document" }, { name: "products" }, { name: "profile" }]), userController.uploadDocuments)
 

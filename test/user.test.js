@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const assert = require('assert')
+const assert = require("assert")
 // const chai = import("chai")
 // const expect = chai.expect
 const configObj = require("../src/config/env.config.js")
@@ -14,7 +14,7 @@ describe("Testing User", () => {
   })
 
   beforeEach(async () => {
-    await mongoose.connection.collections.users.drop();
+    await mongoose.connection.collections.users.drop()
   })
 
   it("Create User", async () => {
@@ -28,7 +28,7 @@ describe("Testing User", () => {
     }
 
     const result = await this.userRepository.createUser(newUser)
-    assert.ok(result._id);
+    assert.ok(result._id)
   })
 
   it("Read User By Email", async () => {
@@ -64,8 +64,8 @@ describe("Testing User", () => {
   })
 
   after((done) => {
-    mongoose.connection.close();
-    done();
+    mongoose.connection.close()
+    done()
   })
 }
 )

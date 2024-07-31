@@ -1,4 +1,4 @@
-const cards = document.querySelectorAll('.cardCart')
+const cards = document.querySelectorAll(".cardCart")
 let total = 0
 const cid = document.getElementById("cartId").innerHTML
 
@@ -10,16 +10,16 @@ cards.forEach(card => {
   const _id = card.id
 
   const updateSubtotal = () => {
-    const quantityValue = parseInt(quantity.value);
-    const subtotalValue = price * quantityValue;
-    subTotal.innerHTML = subtotalValue;
-    return subtotalValue;
+    const quantityValue = parseInt(quantity.value)
+    const subtotalValue = price * quantityValue
+    subTotal.innerHTML = subtotalValue
+    return subtotalValue
   }
 
   quantity.addEventListener("change", () => {
-    const subtotalValue = updateSubtotal();
-    total = [...cards].reduce((acc, card) => acc + parseInt(card.querySelector(".subTotal").innerHTML), 0);
-    document.getElementById("total").innerHTML = `Total: $${total}`;
+    const subtotalValue = updateSubtotal()
+    total = [...cards].reduce((acc, card) => acc + parseInt(card.querySelector(".subTotal").innerHTML), 0)
+    document.getElementById("total").innerHTML = `Total: $${total}`
 
     fetch(`/api/carts/${cid}/product/${_id}`, {
       method: "PUT",

@@ -1,14 +1,14 @@
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken")
 const configObj = require("../config/env.config.js")
 const { SECRET_KEY_TOKEN } = configObj
 
 const checkUserRole = (allowedRoles) => (req, res, next) => {
-    const token = req.cookies.userToken;
+    const token = req.cookies.userToken
 
     if (token) {
         jwt.verify(token, SECRET_KEY_TOKEN, (err, decoded) => {
             if (err) {
-                res.status(403).json({status: "invalidToken", message: "Access denied. Invalid Token."});
+                res.status(403).json({status: "invalidToken", message: "Access denied. Invalid Token."})
             } else {
                 const userRole = decoded.user.role
                 if (allowedRoles.includes(userRole)) {
@@ -19,8 +19,8 @@ const checkUserRole = (allowedRoles) => (req, res, next) => {
             }
         })
     } else {
-        res.status(403).json({status: "tokenNotProvided", message: "Access denied. Token not provided."});
+        res.status(403).json({status: "tokenNotProvided", message: "Access denied. Token not provided."})
     }
-};
+}
 
-module.exports = checkUserRole;
+module.exports = checkUserRole

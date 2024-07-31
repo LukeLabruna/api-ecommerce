@@ -128,7 +128,7 @@ class ViewController {
       res.render("profile", { user: userDto, isAdmin, isPremium, isRegular })
     } catch (error) {
       req.logger.error(error)
-      res.status(500).send('Internal Server Error')
+      res.status(500).send("Internal Server Error")
     }
   }
 
@@ -147,7 +147,7 @@ class ViewController {
       res.render("checkout", { user: userDto, purchaseData, ticket })
     } catch (error) {
       req.logger.error(error)
-      res.status(500).send('Internal Server Error')
+      res.status(500).send("Internal Server Error")
     }
   }
 

@@ -49,7 +49,7 @@ class UserRepository {
 
   async userValidPassword(email, password) {
     try {
-      const user = await UserModel.findOne({ email });
+      const user = await UserModel.findOne({ email })
       if (!user) {
         throw new Error("User not exist")
       } 

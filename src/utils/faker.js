@@ -1,9 +1,9 @@
 const { faker } = require("@faker-js/faker")
 
-const categories = ["CPU", "GPU", "PSU", "RAM", "MOTHER"];
+const categories = ["CPU", "GPU", "PSU", "RAM", "MOTHER"]
 
 const getRandomCategory = () => {
-  return categories[Math.floor(Math.random() * categories.length)];
+  return categories[Math.floor(Math.random() * categories.length)]
 }
 
 const productGenerator = () => {

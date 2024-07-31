@@ -286,7 +286,7 @@ h1 {
   font-size: 2rem;
 }
 
-#cid {
+#cid, #uid, .displayNone {
   display: none;
 }
 
@@ -298,4 +298,32 @@ h1 {
 
 .userProfile button {
   width: 100%;
+}
+
+.preview {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0 3rem;
+  margin-bottom: 3rem;
+}
+
+.preview div, .preview div img, .preview div embed{
+  height: 100%;
+  width: 15rem;
+}
+
+.preview div embed {
+  height: 15rem;
+}
+
+.preview div img {
+  object-fit: contain;
+}
+
+.displayBlock {
+  display: inline-block;
+}
+
+.preview div p {
+  margin-bottom: 1rem;
 }

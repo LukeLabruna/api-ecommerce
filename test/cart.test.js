@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const assert = require('assert')
+const assert = require("assert")
 // const chai = import("chai")
 // const expect = chai.expect
 const configObj = require("../src/config/env.config.js")
@@ -16,7 +16,7 @@ describe("Testing Cart", () => {
   it("Create Cart", async () => {
     // this.timeout(5000)
     const result = await this.cartRepository.addCart()
-    assert.ok(result._id); 
+    assert.ok(result._id)
   })
 
   it("Get cart by Id", async () => {
@@ -34,8 +34,8 @@ describe("Testing Cart", () => {
   })
 
   after((done) => {
-    mongoose.connection.close();
-    done();
+    mongoose.connection.close()
+    done()
   })
 }
 )

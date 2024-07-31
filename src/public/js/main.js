@@ -57,8 +57,8 @@ const renderProducts = (products) => {
     card.className = "card"
 
     const images = prod.thumbnail && prod.thumbnail.length > 0
-      ? prod.thumbnail.map(imgSrc => `<img src="${imgSrc}" alt="${prod.title}">`).join('')
-      : '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLhZ20NCp7B8aXMv9r7CVxomuhhoPVyT3AcJceeVqmoASVe4m8U6d-mgd0YJWQqfbdfOU&usqp=CAU" alt="No Image">'
+      ? prod.thumbnail.map(imgSrc => `<img src="${imgSrc}" alt="${prod.title}">`).join("")
+      : "<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLhZ20NCp7B8aXMv9r7CVxomuhhoPVyT3AcJceeVqmoASVe4m8U6d-mgd0YJWQqfbdfOU&usqp=CAU" alt="No Image">"
 
     card.innerHTML = `
       <div class="images" >

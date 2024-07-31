@@ -31,7 +31,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CartProducts'
+                  $ref: "#/components/schemas/CartProducts"
         500:
           description: Internal server error
     put:
@@ -53,7 +53,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/CartProduct'
+                $ref: "#/components/schemas/CartProduct"
       responses:
         200:
           description: Cart products successfully updated

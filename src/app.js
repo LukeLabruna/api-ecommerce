@@ -3,7 +3,7 @@ const exphbs = require("express-handlebars")
 const Socket = require("./socket/sockets.js")
 require("./utils/database.js")
 const mainRoutes = require("./routes/main.router.js")
-const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser")
 const configObj = require("./config/env.config.js")
 const { PORT } = configObj
 const swaggerUiExpress = require("swagger-ui-express")
@@ -19,8 +19,8 @@ app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs, {explo
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use('*/css', express.static('src/public/css'))
-app.use('*/js', express.static('src/public/js'))
+app.use("*/css", express.static("src/public/css"))
+app.use("*/js", express.static("src/public/js"))
 
 app.engine("handlebars", exphbs.engine({
   runtimeOptions: {

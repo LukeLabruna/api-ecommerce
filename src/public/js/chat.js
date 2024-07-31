@@ -8,8 +8,8 @@ let user = document.getElementById("userName").innerHTML
 chatBox.addEventListener("keyup", (e) => {
   if(e.key === "Enter") {
       if(chatBox.value.trim().length > 0) {
-          socket.emit("message", {user: user, message: chatBox.value}); 
-          chatBox.value = "";
+          socket.emit("message", {user: user, message: chatBox.value})
+          chatBox.value = ""
       }
   }
 })

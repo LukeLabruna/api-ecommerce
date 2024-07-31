@@ -5,14 +5,14 @@ class CustomError {
     message,
     code = 1,
   }) => {
-    const err = new Error(message);
-    err.name = name;
-    err.cause = cause;
-    err.message = message;
-    err.code = code;
+    const err = new Error(message)
+    err.name = name
+    err.cause = cause
+    err.message = message
+    err.code = code
 
-    throw err;
-  };
+    throw err
+  }
 }
 
 module.exports = CustomError

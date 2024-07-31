@@ -67,7 +67,7 @@ class CartRepository {
       }
       const productExists = cart.products.find(p => p.product._id.toString() === pid)
       if (productExists) {
-        productExists.quantity += quantity;
+        productExists.quantity += quantity
       } else {
         const newProduct = {
           product: pid,
@@ -163,7 +163,7 @@ class CartRepository {
       const productIndex = cart.products.findIndex(item => item.product._id.toString() === pid)
       if (productIndex !== -1) {
         cart.products[productIndex].quantity = quantity
-        cart.markModified('products')
+        cart.markModified("products")
         await cart.save()
       } else {
         throw new Error(`Product with Id: ${cid} not found in Cart with Id: ${cid}`)
@@ -185,7 +185,7 @@ class CartRepository {
         })
       }
       cart.products = updatedProducts
-      cart.markModified('products')
+      cart.markModified("products")
       await cart.save()
     } catch (error) {
       throw error

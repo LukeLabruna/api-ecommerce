@@ -89,10 +89,10 @@ class UserController {
       user.resetToken = {
         token: token,
         expiresAt: new Date(Date.now() + 3600000)
-      };
+      }
       await user.save()
 
-      await emailService.sendMailResetPassword(email, user.first_name, token);
+      await emailService.sendMailResetPassword(email, user.first_name, token)
 
       res.redirect("/user/confirmationsend")
     } catch (error) {
@@ -114,16 +114,16 @@ class UserController {
 
       const resetToken = user.resetToken
       if (!resetToken || resetToken.token !== token) {
-        return res.render("resetpassword", { user: "", error: "Invalid token reset" });
+        return res.render("resetpassword", { user: "", error: "Invalid token reset" })
       }
 
-      const now = new Date();
+      const now = new Date()
       if (now > resetToken.expiresAt) {
-        return res.render("resetpassword", { user: "", error: "Token expired" });
+        return res.render("resetpassword", { user: "", error: "Token expired" })
       }
 
       if (await isValidPassword(password, user)) {
-        return res.render("resetpassword", { user: "", error: "The new password cannot be the same as the current password" });
+        return res.render("resetpassword", { user: "", error: "The new password cannot be the same as the current password" })
       }
 
 
@@ -131,10 +131,10 @@ class UserController {
       user.resetToken = undefined
       await user.save()
 
-      return res.redirect("/user/login");
+      return res.redirect("/user/login")
     } catch (error) {
-      console.error(error);
-      return res.status(500).render("passwordreset", { error: "Internal server error" });
+      console.error(error)
+      return res.status(500).render("passwordreset", { error: "Internal server error" })
     }
   }
 
@@ -185,7 +185,7 @@ class UserController {
       if (uploadedDocuments) {
         if (uploadedDocuments.document) {
           user.documents = user.documents.concat(uploadedDocuments.document.map(doc => {
-            const fileNameWithoutExt = doc.originalname.split('.').slice(0, -1).join('.')
+            const fileNameWithoutExt = doc.originalname.split(".").slice(0, -1).join(".")
             return {
               name: fileNameWithoutExt,
               reference: doc.path
@@ -212,7 +212,7 @@ class UserController {
 
       res.status(200).json({status: "success", message: "Documents uploaded successfully"})
     } catch (error) {
-      console.log(error);
+      console.log(error)
       res.status(500).json({status:"error", message: "Internal server error" })
     }
 

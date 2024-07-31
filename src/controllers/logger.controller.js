@@ -6,7 +6,7 @@ const loggerController = (req, res) => {
   req.logger.error("Error message")
   req.logger.fatal("Fatal message")
 
-  res.send("Generated logs");
+  res.send("Generated logs")
 }
 
 module.exports = loggerController
