@@ -98,7 +98,7 @@ class UserRepository {
     }
   }
 
-  async getUsersDisconnected() {
+  async getDisconnectedUsers() {
     const twoDaysAgo = new Date()
     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
     try {
