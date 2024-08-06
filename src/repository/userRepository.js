@@ -10,7 +10,7 @@ class UserRepository {
       const userExist = await UserModel.findOne({ email: user.email })
 
       if (userExist) {
-        throw new Error(`Email ${user.email} is already in use`)
+        throw new Error(`Email already exists`)
       }
 
       const newCart = await cartRepository.addCart()
@@ -52,7 +52,7 @@ class UserRepository {
       const user = await UserModel.findOne({ email })
       if (!user) {
         throw new Error("User not exist")
-      } 
+      }
       const isValid = await isValidPassword(password, user)
       if (!isValid) {
         throw new Error("Invalid password")
@@ -83,6 +83,19 @@ class UserRepository {
       }
     } catch (error) {
       throw error
+    }
+  }
+
+  async getUsersToDelete() {
+    const twoDaysAgo = new Date()
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
+    try {
+      const result = await UserModel.find({
+        last_connection: { $lte: twoDaysAgo }
+      })
+      return result
+    } catch (error) {
+      console.log(error)
     }
   }
 }

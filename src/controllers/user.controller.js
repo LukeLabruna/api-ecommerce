@@ -24,7 +24,10 @@ class UserController {
 
       res.redirect("/user/profile")
     } catch (error) {
-      res.send(error)
+      if(error.message === "Email already exists"){
+      return  res.render("failedRegister")
+      }
+      res.send("Internal server error")
     }
   }
 
@@ -45,7 +48,10 @@ class UserController {
       res.redirect("/user/profile")
 
     } catch (error) {
-      res.send(error.message)
+      if(error.message === "User not exist" || error.message === "Invalid password") {
+      return res.render("failedLogin")
+      }
+      res.send("Internal server error")
     }
   }
 
@@ -134,7 +140,7 @@ class UserController {
       return res.redirect("/user/login")
     } catch (error) {
       console.error(error)
-      return res.status(500).render("passwordreset", { error: "Internal server error" })
+      return res.status(500).render("resetpassword", { error: "Internal server error" })
     }
   }
 

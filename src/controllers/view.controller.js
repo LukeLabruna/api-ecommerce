@@ -6,6 +6,8 @@ const productRepository = new ProductRepository
 const UserDTO = require("../DTO/userDTO.js")
 const TicketService = require("../service/ticketService.js")
 const ticketService = new TicketService
+const UserRepository = require("../repository/userRepository.js")
+const userRepository = new UserRepository
 
 class ViewController {
 
@@ -173,6 +175,16 @@ class ViewController {
   async updateDocuments(req, res) {
     const userDto = new UserDTO(req.user.first_name, req.user.last_name, req.user.age, req.user.email, req.user.cartId, req.user.role, req.user._id)
     res.render("updateDocuments", { user: userDto})
+  }
+
+  async deleteUsers(req, res) {
+    const userDto = new UserDTO(req.user.first_name, req.user.last_name, req.user.age, req.user.email, req.user.cartId, req.user.role, req.user._id)
+    const users = await userRepository.getUsersToDelete()
+    const usersToDelete = users.map(user => ({
+      name: `${user.first_name} ${user.last_name}`,
+      last_connection: user.last_connection.toISOString().substring(0, 10)
+    }))
+    res.render("deleteusers", { user: userDto, usersToDelete})
   }
 }
 

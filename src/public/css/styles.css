@@ -327,3 +327,22 @@ h1 {
 .preview div p {
   margin-bottom: 1rem;
 }
+
+.userToDelete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.userToDelete .card {
+  width: 60%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.userToDelete .card form {
+  display: flex;
+  gap: 1rem;
+}
+

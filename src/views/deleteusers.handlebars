@@ -1,0 +1,12 @@
+{{>navBar}}
+
+<h1>Delete Users</h1>
+<div class="userToDelete">
+<h3>Users who have been disconnected for more than two days.</h3>
+  {{#each usersToDelete}}
+  {{> cardUser}}
+  {{/each}}
+  <form action="">
+    <button type="submit">Delete all users</button>
+  </form>
+</div>

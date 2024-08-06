@@ -6,6 +6,7 @@
   <h2>Welcome {{user.name}}</h2>
   {{#if isAdmin}}
     <a href="/realtimeproducts"><button>Modify Products</button></a>
+    <a href="/user/deleteusers"> <button>Delete users</button> </a>
     {{else}}
       <a href="/chat"><button>Live Chat</button></a>
       <a href="/products"><button>Store</button></a>
@@ -17,11 +18,11 @@
       {{/if}}
   {{/if}}
   {{#if isRegular}}
+    <a href="/user/update-documents"><button>Update Documents</button></a>
     <form action="/api/user/premium/{{user.id}}" method="POST">
       <button>Change to Premium User</button>
     </form>
   {{/if}}
-  <a href="/user/update-documents"><button>Update Documents</button></a>
   <a href="/user/requestpasswordreset"><button>Reset password</button></a>
   <a href="/api/user/logout"><button>Logout</button></a>
 </div>
