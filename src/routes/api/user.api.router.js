@@ -14,5 +14,7 @@ router.post("/requestPasswordReset", userController.requestPasswordReset)
 router.post("/resetpassword", userController.resetPassword)
 router.post("/premium/:uid", userController.changeRole)
 router.post("/premium/:uid/documents", upload.fields([{ name: "document" }, { name: "products" }, { name: "profile" }]), userController.uploadDocuments)
+router.delete("/delete/:uid", userController.deleteUser)
+router.delete("/deletedisconnectedusers", userController.deletDisconnectedUsers)
 
 module.exports = router

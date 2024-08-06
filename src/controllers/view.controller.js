@@ -179,10 +179,11 @@ class ViewController {
 
   async deleteUsers(req, res) {
     const userDto = new UserDTO(req.user.first_name, req.user.last_name, req.user.age, req.user.email, req.user.cartId, req.user.role, req.user._id)
-    const users = await userRepository.getUsersToDelete()
+    const users = await userRepository.getUsersDisconnected()
     const usersToDelete = users.map(user => ({
       name: `${user.first_name} ${user.last_name}`,
-      last_connection: user.last_connection.toISOString().substring(0, 10)
+      last_connection: user.last_connection.toISOString().substring(0, 10),
+      uid: `${user._id}`
     }))
     res.render("deleteusers", { user: userDto, usersToDelete})
   }

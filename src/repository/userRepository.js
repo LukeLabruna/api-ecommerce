@@ -86,16 +86,49 @@ class UserRepository {
     }
   }
 
-  async getUsersToDelete() {
+  async deleteUser(uid) {
+    try {
+      const user = await UserModel.findByIdAndDelete(uid)
+      if (!user) {
+        throw new Error(`User not found`)
+      }
+      return user
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getUsersDisconnected() {
     const twoDaysAgo = new Date()
     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
     try {
       const result = await UserModel.find({
+        role: "user",
         last_connection: { $lte: twoDaysAgo }
       })
+      if(!result) {
+        throw new Error("No users to delete")
+      }
       return result
     } catch (error) {
-      console.log(error)
+      throw error
+    }
+  }
+
+  async deletDisconnectedUsers() {
+    const twoDaysAgo = new Date()
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
+    try {
+      const result = await UserModel.deleteMany({
+        role: "user",
+        last_connection: { $lte: twoDaysAgo }
+      })
+      if(!result) {
+        throw new Error("No users to delete")
+      }
+      return result
+    } catch (error) {
+      throw error
     }
   }
 }

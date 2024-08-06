@@ -226,6 +226,32 @@ class UserController {
 
   }
 
+  async deleteUser(req, res) {
+    const {uid} = req.params
+    try {
+      const user = await userRepository.deleteUser(uid)
+
+      if (!user) {
+        return res.status(404).json({ status: "error", message: "User not found" })
+      }
+      res.status(200).json({ status: "success", message: "User deleted successfully" })
+    } catch (error) {
+      res.status(500).json({ status: "error", message: "Internal server error" })
+    }
+  }
+
+  async deletDisconnectedUsers(req, res) {
+    try {
+      const result = await userRepository.deletDisconnectedUsers()
+      if(result.deletedCount === 0) {
+        return res.status(404).json({ status: "error", message: "Users not found" })
+      }
+      res.status(200).json({ status: "success", message: `${result.deletedCount} users deleted successfully` })
+    } catch (error) {
+      res.status(500).json({ status: "error", message: `Internal server error` })
+    }
+  }
+
 }
 
 module.exports = UserController
