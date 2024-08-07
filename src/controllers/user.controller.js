@@ -234,19 +234,21 @@ class UserController {
       if (!user) {
         return res.status(404).json({ status: "error", message: "User not found" })
       }
+      await emailService.sendEmailDeleteUser(user.email, user.first_name)
       res.status(200).json({ status: "success", message: "User deleted successfully" })
     } catch (error) {
       res.status(500).json({ status: "error", message: "Internal server error" })
     }
   }
 
-  async deletDisconnectedUsers(req, res) {
+  async deleteDisconnectedUsers(req, res) {
     try {
-      const result = await userRepository.deletDisconnectedUsers()
-      if(result.deletedCount === 0) {
+      const result = await userRepository.deleteDisconnectedUsers()
+      if(result.delete.deletedCount === 0) {
         return res.status(404).json({ status: "error", message: "Users not found" })
       }
-      res.status(200).json({ status: "success", message: `${result.deletedCount} users deleted successfully` })
+      result.usersDisconected.forEach(async (user) => await emailService.sendEmailDeleteUser(user.email, user.first_name))
+      res.status(200).json({ status: "success", message: `${result.delete.deletedCount} users deleted successfully` })
     } catch (error) {
       res.status(500).json({ status: "error", message: `Internal server error` })
     }

@@ -115,17 +115,19 @@ class UserRepository {
     }
   }
 
-  async deletDisconnectedUsers() {
+  async deleteDisconnectedUsers() {
     const twoDaysAgo = new Date()
     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
     try {
-      const result = await UserModel.deleteMany({
+      const usersDisconected = await this.getDisconnectedUsers()
+      const resultDelete = await UserModel.deleteMany({
         role: "user",
         last_connection: { $lte: twoDaysAgo }
       })
-      if(!result) {
+      if(!resultDelete) {
         throw new Error("No users to delete")
       }
+      const result = {delete: resultDelete, usersDisconected}
       return result
     } catch (error) {
       throw error

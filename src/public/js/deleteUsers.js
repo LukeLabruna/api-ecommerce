@@ -63,7 +63,7 @@ deleteAllUsers.addEventListener("click", () => {
   })
     .then((result) => {
       if (result.isConfirmed) {
-        fetch(`/api/user/deleteusersdisconnected`, {
+        fetch(`/api/user/deletedisconnectedusers`, {
           method: 'DELETE'
         })
           .then(response => response.json())

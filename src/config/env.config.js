@@ -8,6 +8,7 @@ dotenv.config({
 })
 
 const configObj = {
+  BASE_URL: process.env.BASE_URL,
   PORT: process.env.PORT,
   USER_MONGO: process.env.USER_MONGO,
   PASSWORD_MONGO: process.env.PASSWORD_MONGO,
