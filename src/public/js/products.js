@@ -48,7 +48,3 @@ cards.forEach(card => {
       })
   })
 })
-
-
-
-

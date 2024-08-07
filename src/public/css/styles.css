@@ -211,6 +211,7 @@ h1 {
   left: 50%;
   transform: translate(-50%);
   box-shadow: 0 0 1rem rgb(212, 212, 212);
+  width: 80%;
 }
 
 .productDetail {
