@@ -99,6 +99,35 @@ class EmailService {
             throw new Error("Error sending email")
         }
     }
+
+    async sendEmailDeleteProduct(email, title) {
+        try {
+            const mailOptions = {
+                from: "E-commerce <lucaspablolabruna@gmail.com>",
+                to: email,
+                subject: "Producto eliminado",
+                html: `
+                <div style="text-align: center;
+                            margin: 0 auto;
+                            padding: 3rem;
+                            border-radius: 0.5rem;
+                            border: solid 1px black;
+                            box-shadow: 0 0 1rem rgb(212, 212, 212);">
+                    <h1>Producto eliminado.</h1>
+                    <p>Hola!</p>
+                    <p>El producto, ${title}, ha sido eliminado de nuestra base de datos.</p>
+                    <p>En caso de querer recuperar la venta de este produco contactese a soporte.</p>
+                    <a href="${BASE_URL}/user/support" style="color: blue;">Soporte tecnico</a>
+                    <div/>
+                `
+            }
+
+            await this.transporter.sendMail(mailOptions)
+        } catch (error) {
+            console.error("Error sending email:", error)
+            throw new Error("Error sending email")
+        }
+    }
 }
 
 module.exports = EmailService

@@ -7,6 +7,8 @@ const {
   generateNotFoundProductErrorInfo,
   generateInvalidCodeProductErrorInfo,
 } = require("../service/errors/infoErrors.js")
+const EmailService = require("../service/emailService.js")
+const emailService = new EmailService
 
 class ProductRepository {
 
@@ -108,6 +110,8 @@ class ProductRepository {
           message: "Error when trying to delete a product",
           code: Errors.INVALID_ID,
         })
+      } else if (productToDelete.owner !== "admin") {
+        await emailService.sendEmailDeleteProduct(productToDelete.owner, productToDelete.title)
       }
     } catch (error) {
       throw error
