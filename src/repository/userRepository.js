@@ -105,7 +105,7 @@ class UserRepository {
       const result = await UserModel.find({
         role: "user",
         last_connection: { $lte: twoDaysAgo }
-      })
+      }).sort({ last_connection: 1 })
       if(!result) {
         throw new Error("No users to delete")
       }
