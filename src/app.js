@@ -5,7 +5,7 @@ require("./utils/database.js")
 const mainRoutes = require("./routes/main.router.js")
 const cookieParser = require("cookie-parser")
 const configObj = require("./config/env.config.js")
-const { PORT } = configObj
+const { PORT, ENVIRONMENT, BASE_URL } = configObj
 const swaggerUiExpress = require("swagger-ui-express")
 const specs = require("./config/swagger.config.js") 
 
@@ -13,7 +13,6 @@ const passport = require("passport")
 const initializePassport = require("./config/passport.config.js")
 
 const app = express()
-const port = PORT || 3000
 
 app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs, {explorer: true}))
 
@@ -38,7 +37,7 @@ app.use(cookieParser())
 
 mainRoutes(app)
 
-const httpServer = app.listen(port, () => console.log(`Listening on http://localhost:${port}`))
+const httpServer = app.listen(PORT, () => console.log(`Listening on ${ENVIRONMENT === "development" ? `http://localhost:${PORT}` : BASE_URL}`))
 
 new Socket(httpServer)
 
