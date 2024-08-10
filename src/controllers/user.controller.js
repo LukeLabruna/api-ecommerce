@@ -167,7 +167,14 @@ class UserController {
 
       const newRole = user.role === "user" ? "premium" : "user"
 
-      await userRepository.changeRole(uid, newRole)
+      const userUpdated = await userRepository.changeRole(uid, newRole)
+
+      const token = jwt.sign({ user: userUpdated }, SECRET_KEY_TOKEN, { expiresIn: "24h" })
+
+      res.cookie("userToken", token, {
+        maxAge: 24 * 3600 * 1000,
+        httpOnly: true
+      })
 
       res.redirect("/user/profile")
     } catch (error) {

@@ -81,6 +81,7 @@ class UserRepository {
       if (!user) {
         throw new Error("The role could not be changed.")
       }
+      return user
     } catch (error) {
       throw error
     }
