@@ -1,12 +1,4 @@
 const ProductModel = require("../models/product.model.js")
-const CustomError = require("../service/errors/customError.js")
-const Errors = require("../service/errors/enumErrors.js")
-const {
-  generateFieldProductErrorInfo,
-  generateInvalidId,
-  generateNotFoundProductErrorInfo,
-  generateInvalidCodeProductErrorInfo,
-} = require("../service/errors/infoErrors.js")
 const EmailService = require("../service/emailService.js")
 const emailService = new EmailService
 
@@ -17,20 +9,10 @@ class ProductRepository {
     try {
       const productCodeExists = await ProductModel.findOne({code: code})
       if (productCodeExists) {
-        throw CustomError.createError({
-          name: "Product with code already exists",
-          cause: generateInvalidCodeProductErrorInfo(code),
-          message: "Error when trying to create a product",
-          code: Errors.INVALID_CODE,
-        })
+        throw new Error("Product with code already exists")
       }
       if (!title || !description || !price || !code || !stock || !category) {
-        throw CustomError.createError({
-          name: "All fields are required",
-          cause: generateFieldProductErrorInfo(product),
-          message: "Error when trying to create a product",
-          code: Errors.ALL_FIELD_REQUIRED,
-        })
+        throw new Error("All fields are required")
       }
       const newProduct = new ProductModel({
         title,
@@ -61,9 +43,12 @@ class ProductRepository {
       }
       const queryOption = query ? {category : query} : {} 
       const products = await ProductModel.paginate( queryOption , options )
+      if (products.docs.length === 0) {
+        throw new Error("Products not found")
+      }
       return products
     } catch (error) {
-      throw error      
+      throw error
     }
   }
 
@@ -71,12 +56,7 @@ class ProductRepository {
     try {
       const product = await ProductModel.findById(id)
       if (!product) {
-        throw CustomError.createError({
-          name: "Not found Product",
-          cause: generateNotFoundProductErrorInfo(),
-          message: "Error when trying to found a product",
-          code: Errors.NOT_FOUND,
-        })
+        throw new Error("Product not found")
       }
       return product
     } catch (error) {
@@ -88,13 +68,9 @@ class ProductRepository {
     try {
       const updateProduct = await ProductModel.findByIdAndUpdate(id, updatedProduct)
       if (!updateProduct) {
-        throw CustomError.createError({
-          name: "Invalid product ID",
-          cause: generateInvalidId(id),
-          message: "Error when trying to update a product",
-          code: Errors.INVALID_ID,
-        })
+        throw new Error("Product not found")
       }
+      return updateProduct
     } catch (error) {
       throw error
     }
@@ -104,15 +80,11 @@ class ProductRepository {
     try {
       const productToDelete = await ProductModel.findByIdAndDelete(id)
       if (!productToDelete) {
-        throw CustomError.createError({
-          name: "Invalid product ID",
-          cause: generateInvalidId(id),
-          message: "Error when trying to delete a product",
-          code: Errors.INVALID_ID,
-        })
+        throw new Error("Product not found")
       } else if (productToDelete.owner !== "admin") {
         await emailService.sendEmailDeleteProduct(productToDelete.owner, productToDelete.title)
       }
+      return productToDelete
     } catch (error) {
       throw error
     }

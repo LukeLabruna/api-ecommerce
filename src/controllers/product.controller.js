@@ -6,10 +6,10 @@ class ProductController {
   async addProduct(req, res, next) {
     const newProduct = req.body
     try {
-      await productRepository.addProduct(newProduct)
-      res.send({ status: "success", message: "Correctly aggregated product" })
+      const response = await productRepository.addProduct(newProduct)
+      res.status(201).json({ status: "success", message: "Correctly aggregated product", data: response })
     } catch (error) {
-      next(error)
+      res.status(409).json({status: "error", message: error.message})
     }
   }
 
@@ -17,9 +17,9 @@ class ProductController {
     const { limit, query, sort, page } = req.query
     try {
       const products = await productRepository.getProducts(limit, query, sort, page)
-      res.send(products)
+      res.status(200).json({status: "success", data: products})
     } catch (error) {
-      res.status(500).json({ message: error.message })
+      res.status(404).json({ status: "error", message: error.message })
     }
   }
 
@@ -27,9 +27,9 @@ class ProductController {
     let pid = req.params.pid
     try {
       const product = await productRepository.getProductById(pid)
-      res.send(product)
+      res.status(200).json({status: "success", data: product})
     } catch (error) {
-      next(error)
+      res.status(404).json({status: "error", message: error.message})
     }
   }
 
@@ -37,20 +37,20 @@ class ProductController {
     const pid = req.params.pid
     const updatedProduct = req.body
     try {
-      await productRepository.updateProduct(pid, updatedProduct)
-      res.send({ status: "success", message: "Correctly updated product" })
+      const product = await productRepository.updateProduct(pid, updatedProduct)
+      res.status(200).json({ status: "success", message: "Correctly updated product", data: product})
     } catch (error) {
-      next(error)
+      res.status(404).json({status: "error", message: error.message})
     }
   }
 
   async deleteProduct(req, res, next) {
     const pid = req.params.pid
     try {
-      await productRepository.deleteProduct(pid)
-      res.send({ status: "success", message: `Product with id: ${pid} correctly deleted` })
+      const productToDelete = await productRepository.deleteProduct(pid)
+      res.send({ status: "success", message: `Product with id: ${pid} correctly deleted`, data: productToDelete })
     } catch (error) {
-      next(error)
+      res.status(404).json({status: "error", message: error.message})
     }
   }
 
