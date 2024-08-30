@@ -10,23 +10,19 @@ const checkUserRole = (allowedRoles) => (req, res, next) => {
 
         jwt.verify(token, SECRET_KEY_TOKEN, (err, decoded) => {
             if (err) {
-                req.error = { status: "Invalid Token", message: "Access denied. Invalid Token." }
-                res.render("error", { error: req.error })
+                res.status(403).json({ status: "error", message: "Access denied. Invalid Token." })
             } else {
                 const userRole = decoded.user.role
                 if (allowedRoles.includes(userRole)) {
                     next()
                 } else {
-                    const { first_name, last_name, age, email, cartId, role, _id } = req.user
-                    const userDto = new UserDTO(first_name, last_name, age, email, cartId, role, _id)
-                    req.error = { status: "Invalid User", message: "Access denied. You do not have permission to access this page." }
-                    res.render("error", { error: req.error, user: userDto })
+                    console.log("token: ",token, "decoded: ", decoded)
+                    res.status(401).json({ status: "error", message: "Access denied. Invalid User. You do not have permission to access this page." })
                 }
             }
         })
     } else {
-        req.error = { status: "Token Not Provided", message: "Access denied. Token not provided." }
-        res.render("error", { error: req.error })
+        res.status(404).json({ status: "error", message: "Access denied. Token not provided." })
     }
 }
 

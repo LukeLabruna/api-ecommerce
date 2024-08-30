@@ -38,9 +38,8 @@ class UserRepository {
       const user = await UserModel.findOne({ email })
 
       if (!user) {
-        return null
+        throw new Error("User not found")
       }
-
       return user
     } catch (error) {
       throw error
@@ -51,7 +50,7 @@ class UserRepository {
     try {
       const user = await UserModel.findOne({ email })
       if (!user) {
-        throw new Error("User not exist")
+        throw new Error("User not found")
       }
       const isValid = await isValidPassword(password, user)
       if (!isValid) {
@@ -67,7 +66,7 @@ class UserRepository {
     try {
       const user = await UserModel.findOne(query)
       if (!user) {
-        throw new Error(`User not exist`)
+        throw new Error(`User not found`)
       }
       return user
     } catch (error) {

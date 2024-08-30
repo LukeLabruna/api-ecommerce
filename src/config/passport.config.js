@@ -28,31 +28,6 @@ const initializePassport = () => {
   }
   }))
 
-  passport.use("loginGithub", new GitHubStrategy({
-    clientID: CLIENT_ID_GH,
-    clientSecret: CLIENT_SECRET_GH,
-    callbackURL: CALLBACK_URL_GH
-  }, async (accessToken, refreshToken, profile, done) => {
-    try {
-      const user = await userRepository.readUserByEmail(profile._json.email)
-      if (!user) {
-        const newUser = {
-          first_name: profile._json.name.split(" ")[0],
-          last_name: profile._json.name.split(" ")[profile._json.name.split(" ").length - 1],
-          email: profile._json.email,
-          age: 0,
-          password: "noPassword",
-        }
-        const result = await userRepository.createUser(newUser)
-        done(null, result)
-      } else {
-        done(null, user)
-      }
-    } catch (error) {
-      return done(error)
-    }
-  }))
-
   passport.serializeUser((user, done) => {
     done(null, user._id)
   })
