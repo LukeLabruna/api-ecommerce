@@ -12,13 +12,13 @@ const emailService = new EmailService
 
 class CartController {
 
-  async getProductsByCartId(req, res, next) {
+  async getProductsByCartId(req, res,) {
     const { cid } = req.params
     try {
-      let cartProducts = await cartRepository.getProductsByCartId(cid)
-      res.send(cartProducts)
+      const cartProducts = await cartRepository.getProductsByCartId(cid)
+      res.status(200).json({status: "success", data: cartProducts})
     } catch (error) {
-      next(error)
+      res.status(error.statusCode).json({status: "error", message: error.message})
     }
   }
 
@@ -28,22 +28,22 @@ class CartController {
     const product = await productRepository.getProductById(pid)
     try {
       if (user.email === product.owner) {
-        return res.json({status: "error", message: "You are the owner of this product. You cannot add it to the cart."})
+        return res.status(403).json({status: "error", message: "You are the owner of this product. You cannot add it to the cart."})
       }
-      await cartRepository.addProduct(cid, pid)
-      res.json({ status: "success", message: "Successfully added to the cart." })
+      const newProduct = await cartRepository.addProduct(cid, pid)
+      res.status(200).json({ status: "success", message: "Successfully added to the cart.", data: newProduct })
     } catch (error) {
-      next(error)
+      res.status(error.statusCode).json({status: "error", message: error.message})
     }
   }
 
   async deleteProductById(req, res, next) {
     const { cid, pid } = req.params
     try {
-      await cartRepository.deleteProductById(cid, pid)
-      res.json({ status: "success", message: `Product with id: ${pid} correctly deleted from cart with id: ${cid}` })
+      const deleProduct = await cartRepository.deleteProductById(cid, pid)
+      res.status(200).json({ status: "success", message: `Product correctly deleted from cart`, data: deleProduct })
     } catch (error) {
-      next(error)
+      res.status(error.statusCode).json({status: "error", message: error.message})
     }
   }
 
@@ -51,10 +51,10 @@ class CartController {
     const { cid } = req.params
     const updatedProducts = req.body
     try {
-      await cartRepository.updateCart(cid, updatedProducts)
-      res.send({ status: "success", message: `Products correctly updated in cart with Id: ${cid}` })
+      const products = await cartRepository.updateCart(cid, updatedProducts)
+      res.status(200).json({ status: "success", message: `Products correctly updated in cart`, data: products })
     } catch (error) {
-      next(error)
+      res.status(error.statusCode).json({status: "error", message: error.message})
     }
   }
 
@@ -62,10 +62,10 @@ class CartController {
     const { cid, pid } = req.params
     const quantity = req.body.quantity
     try {
-      await cartRepository.updateProductQuantity(cid, pid, quantity)
-      res.json({ status: "success", message: `Product with Id: ${pid} correctly updated in cart with Id: ${cid}` })
+      const products = await cartRepository.updateProductQuantity(cid, pid, quantity)
+      res.status(200).json({ status: "success", message: `Product correctly updated in cart`, data: products })
     } catch (error) {
-      next(error)
+      res.status(error.statusCode).json({status: "error", message: error.message})
     }
   }
 
@@ -73,17 +73,18 @@ class CartController {
     const { cid } = req.params
     try {
       await cartRepository.deleteAllProducts(cid)
-      res.send({ status: "success", message: `All products correctly deleted from cart with Id: ${cid}` })
+      res.status(200).json({ status: "success", message: `All products correctly deleted from cart` })
     } catch (error) {
-      next(error)
+      res.status(error.statusCode).json({status: "error", message: error.message})
     }
   }
 
-  async purchase(req, res, next) {
+  async purchase(req, res) {
     const cid = req.params.cid
     try {
 
       const cart = await cartRepository.getCartById(cid)
+
       const products = cart.products
 
       const notAvailable = []
@@ -114,19 +115,20 @@ class CartController {
 
       cart.products = notAvailable
       await cart.save()
-      await emailService.sendEmailPurchase(userWithCart.email, userWithCart.first_name,  newTicket._id)
+      await emailService.sendEmailPurchase(userWithCart.email, userWithCart.first_name,  newTicket.code)
 
       const purchaseData = {
         clientName: `${userWithCart.first_name} ${userWithCart.last_name}`,
         email: userWithCart.email,
-        numTicket: newTicket._id
+        numTicket: newTicket.code,
+        products,
+
       }
 
-      const queryString = new URLSearchParams(purchaseData).toString()
-
-      res.redirect(`/checkout?${queryString}`)
+      res.status(200).json({ status: "success", message: "Purchase generated correctly", data: purchaseData})
+  
     } catch (error) {
-      next(error)
+      res.status(error.statusCode).json({status: "error", message: error.message})
     }
   }
 }

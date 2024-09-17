@@ -1,11 +1,6 @@
 const CartModel = require("../models/cart.model.js")
-const CustomError = require("../service/errors/customError.js")
-const Errors = require("../service/errors/enumErrors.js")
-const {
-  generateNotFoundProductErrorInfo,
-  generateInvalidId,
-  generateNotFoundCartErrorInfo
-} = require("../service/errors/infoErrors.js")
+const ProductModel = require("../models/product.model.js")
+const HandleError = require("../utils/handleErrors.js")
 
 class CartRepository {
 
@@ -15,7 +10,7 @@ class CartRepository {
       await newCart.save()
       return newCart
     } catch (error) {
-      throw error
+      throw new HttpError("Error adding cart", 500)
     }
   }
 
@@ -23,16 +18,11 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw CustomError.createError({
-          name: "Invalid cart ID",
-          cause: generateNotFoundCartErrorInfo(),
-          message: "Error when trying to found a cart",
-          code: Errors.INVALID_ID,
-        })
-      }
+        throw new HandleError("Cart not found", 404)
+        }
       return cart
     } catch (error) {
-      throw error
+      throw error instanceof HandleError ? error : new HttpError("Error retrieving cart", 500)
     }
   }
 
@@ -41,29 +31,26 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw CustomError.createError({
-          name: "Invalid cart ID",
-          cause: generateInvalidId(cid),
-          message: "Error when trying to read a cart",
-          code: Errors.INVALID_ID,
-        })
+        throw new HandleError("Cart not found", 404)
+      }
+      if (cart.products.length === 0 ) {
+        throw new HandleError("Cart is empty", 400)
       }
       return cart.products
     } catch (error) {
-      throw error
+      throw error instanceof HandleError ? error : new HttpError("Error retrieving products from cart", 500);
     }
   }
 
   async addProduct(cid, pid, quantity = 1) {
     try {
       const cart = await CartModel.findById(cid)
+      const product = await ProductModel.findById(pid)
+      if (!product) {
+        throw new HttpError("Product not found", 404)
+      }
       if (!cart) {
-        throw CustomError.createError({
-          name: "Invalid cart ID",
-          cause: generateInvalidIdCartErrorInfo(cid),
-          message: "Error when trying to read a cart",
-          code: Errors.INVALID_ID,
-        })
+        throw new HandleError("Cart not found", 404)
       }
       const productExists = cart.products.find(p => p.product._id.toString() === pid)
       if (productExists) {
@@ -77,8 +64,9 @@ class CartRepository {
       }
       cart.markModified("products")
       await cart.save()
+      return cart.products
     } catch (error) {
-      throw error
+      throw error instanceof HandleError ? error : new HttpError("Error adding product to cart", 500);
     }
   }
 
@@ -86,28 +74,19 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw CustomError.createError({
-          name: "Invalid cart ID",
-          cause: generateInvalidId(cid),
-          message: "Error when trying to read a cart",
-          code: Errors.INVALID_ID,
-        })
+        throw new HandleError("Cart not found", 404)
       }
       const productIndex = cart.products.findIndex(p => p.product._id.toString() === pid)
       if (productIndex === -1) {
-        throw CustomError.createError({
-          name: "Not found Product",
-          cause: generateNotFoundProductErrorInfo(),
-          message: `Product with id ${pid} not found`,
-          code: Errors.NOT_FOUND,
-        })
+        throw new Error("Product not found")
       } else {
         cart.products.splice(productIndex, 1)
       }
       cart.markModified("products")
       await cart.save()
+      return cart.products
     } catch (error) {
-      throw error
+      throw error instanceof HandleError ? error : new HttpError("Error deleting product from cart", 500);
     }
   }
 
@@ -115,37 +94,29 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw CustomError.createError({
-          name: "Invalid cart ID",
-          cause: generateInvalidId(cid),
-          message: "Error when trying to read a cart",
-          code: Errors.INVALID_ID,
-        })
+        throw new HandleError("Cart not found", 404)
       }
       if (cart.products.length === 0) {
-        throw new Error(`Cart with Id: ${cid} is alredy empty`)
+        throw new HandleError("Cart is already empty", 400)
       }
       cart.products = []
       cart.markModified("products")
       await cart.save()
+      return cart.products
     } catch (error) {
-      throw error
+      throw error instanceof HandleError ? error : new HttpError("Error deleting all products from cart", 500);
     }
   }
 
   async deleteCart(cid) {
     try {
       const cartDelete = await CartModel.findByIdAndDelete(cid)
-      if (!cartDelete) {
-        throw CustomError.createError({
-          name: "Invalid cart ID",
-          cause: generateInvalidId(cid),
-          message: "Error when trying to delete a cart",
-          code: Errors.INVALID_ID,
-        })
+      if (!cart) {
+        throw new HandleError("Cart not found", 404)
       }
+      return cartDelete
     } catch (error) {
-      throw error
+      throw error instanceof HandleError ? error : new HttpError("Error deleting cart", 500);
     }
   }
 
@@ -153,12 +124,7 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw CustomError.createError({
-          name: "Invalid cart ID",
-          cause: generateInvalidId(cid),
-          message: "Error when trying to read a cart",
-          code: Errors.INVALID_ID,
-        })
+        throw new HandleError("Cart not found", 404)
       }
       const productIndex = cart.products.findIndex(item => item.product._id.toString() === pid)
       if (productIndex !== -1) {
@@ -166,10 +132,11 @@ class CartRepository {
         cart.markModified("products")
         await cart.save()
       } else {
-        throw new Error(`Product with Id: ${cid} not found in Cart with Id: ${cid}`)
+        throw new HandleError(`Product not found in Cart`, 404)
       }
+      return cart.products
     } catch (error) {
-      throw error
+      throw error instanceof HandleError ? error : new HttpError("Error updating product quantity", 500);
     }
   }
 
@@ -177,18 +144,14 @@ class CartRepository {
     try {
       const cart = await CartModel.findById(cid)
       if (!cart) {
-        throw CustomError.createError({
-          name: "Invalid cart ID",
-          cause: generateInvalidId(cid),
-          message: "Error when trying to read a cart",
-          code: Errors.INVALID_ID,
-        })
+        throw new HandleError("Cart not found", 404)
       }
       cart.products = updatedProducts
       cart.markModified("products")
       await cart.save()
+      return cart.products
     } catch (error) {
-      throw error
+      throw error instanceof HandleError ? error : new HttpError("Error updating cart", 500);
     }
   }
 
