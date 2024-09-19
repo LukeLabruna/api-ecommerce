@@ -22,7 +22,7 @@ class UserController {
         maxAge: 24 * 3600 * 1000,
         httpOnly: true
       })
-      const userDTO = new UserDTO(user.first_name, user.last_name, user.age, user.email, user.cartId, user.role, user._id)
+      const userDTO = new UserDTO(newUser.first_name, newUser.last_name, newUser.age, newUser.email, newUser.cartId, newUser.role, newUser._id)
       res.status(200).json({ status: "success", message: "User created successfully", data: { user: userDTO, token: token } })
     } catch (error) {
       res.status(409).json({ status: "error", message: error.message })

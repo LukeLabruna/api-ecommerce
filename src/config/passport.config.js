@@ -1,12 +1,13 @@
 const passport = require("passport")
-const GitHubStrategy = require("passport-github2")
+// const GitHubStrategy = require("passport-github2")
 const jwt = require("passport-jwt")
 const UserRepository = require("../repository/userRepository.js")
-const CartRepository = require("../repository/cartRepository.js")
+// const CartRepository = require("../repository/cartRepository.js")
 const configObj = require("./env.config")
 const { createHash } = require("../utils/hashBcrypt.js")
 const userRepository = new UserRepository
-const cartRepository = new CartRepository
+// const cartRepository = new CartRepository
+const UserModel = require("../models/user.model.js")
 const { SECRET_KEY_TOKEN, CLIENT_ID_GH, CLIENT_SECRET_GH, CALLBACK_URL_GH } = configObj
 
 const JWTStrategy = jwt.Strategy
