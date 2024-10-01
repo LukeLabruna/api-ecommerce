@@ -18,7 +18,8 @@ const configObj = {
   CALLBAK_URL_GH: process.env.CALLBAK_URL_GH,
   SECRET_KEY_TOKEN: process.env.SECRET_KEY_TOKEN,
   ENVIRONMENT: process.env.ENVIRONMENT,
-  LOG_LEVEL: process.env.LOG_LEVEL
+  LOG_LEVEL: process.env.LOG_LEVEL,
+  ACCESS_TOKEN_MP: process.env.ACCESS_TOKEN_MP
 }
 
 module.exports = configObj
